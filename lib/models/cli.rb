@@ -1,37 +1,31 @@
 class Cli
-
-    def welcome
-        puts "**Favorite Animals******************************"
-        puts "By: Jennifer Yoo, Ian Rosen, James Wu           "
-        puts "        __                                      "
-        puts "        '. \\                                   "
-        puts "         '- \\                                  "
-        puts "          / /_         .---.                    "
-        puts "         / |,.\\/--.//    )                     "
-        puts "         |  \\//        )/  /                   "
-        puts "   Art    \\ ' ^ ^    /    )____.----..   6     "
-        puts "  by       '.____.    .___/            \\._)    "
-        puts "   Morfina   .\/.                      ).       "
-        puts "               '\\                      /       "
-        puts "               _/\\/    ).        )    (        "
-        puts "              /#  .!    |        /\\   /        "
-        puts "             \\  C// #  /'-----''/ #  /         "
-        puts "           .  \\ 'C/ |    |    |   |  |      ,  "
-        puts "          \\), .. .'OOO-'. ..'OOO'OOO-'. ..\\(, "
-        puts "______Would you like to log in or sign up______ "
-    end
+    include Art::InstanceMethods
 
     def startup
         puts "please type login or sign up"
-        puts "You can type exit to leave"
-        input= gets.strip
-        if input != "login" && input != "sign up"
-            startup
+        # puts "You can type exit to leave"
+        input= gets.strip.downcase
+        user ="start up has failed"
+        if input=="exit"
+            user=goodbye
         elsif input == "login"
-            User.login
-        elsif input == "sign up"
-            User.sign_up 
+            user=User.login
+            if user == false
+                puts "your username or password is incorrect"
+                startup
+            end
+            user 
+        elsif input == "sign up" || input == "signup"
+            user=User.sign_up
+            if user==false
+                puts "username is already taken"
+                startup
+            end 
+            user
+        else
+            startup
         end
+        user
     end
 
     def help
@@ -43,11 +37,6 @@ class Cli
         puts "Those are the commands that are available"
     end
 
-    def goodbye
-        puts "We are sorry to see you go"
-        puts "Please come back again!"
-    end
-
     # def runtime
     #     welcome 
     #     user = startup
@@ -57,7 +46,7 @@ class Cli
     def turn(user)
         puts "Please enter a command"
         puts "Please type 'help' if you would like a list of commands"
-        input=gets.chomp
+        input=gets.chomp.downcase
         if input=="exit"
             goodbye
         elsif input=="help"
@@ -81,22 +70,26 @@ class Cli
         elsif input == "animals"
             #user can view animls from the users list
             turn(user)
-        else input == "search"
+        elsif input == "search"
             #user can utilize our search function
-        #     puts "What would you like to search by?"
-        #     puts "please type 'stop' to end search"
-        #         search_input=gets.chomp
-        #         until search_input=="stop"
-        #             #1  or category
-        #             #2 or common_name
-        #             #3 or species
-        #             if search_input== "1" || search_input=="category"
-        #             elsif search_input=="2" || search_input=="common" || search_input=="common name"
-        #             elsif search_input=="3" || search_input=="species"
-        #             end
-        #         end 
-        #     turn(user)
-        # else turn(user)
+            puts "What would you like to search by?"
+            puts "please type 'stop' to end search"
+            search_input=""
+            until search_input=="stop"
+                
+                #     #1  or category
+                #     #2 or common_name
+                #     #3 or species
+                #     if search_input== "1" || search_input=="category"
+                #     elsif search_input=="2" || search_input=="common" || search_input=="common name"
+                #     elsif search_input=="3" || search_input=="species"
+                #     end
+                #
+            search_input=gets.chomp.downcase
+            end 
+            turn(user)
+        else 
+            turn(user)
         end
     end
 

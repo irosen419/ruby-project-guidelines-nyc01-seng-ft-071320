@@ -3,35 +3,43 @@ class User < ActiveRecord::Base
     has_many :animals, through: :favorites
 
     def self.login
-        puts "Welcome Back! What is your Username?"
         puts "Log in see the status of your favorite animals." 
+        puts "Welcome Back! What is your Username?"
         name = gets.chomp
-        if User.find_by(username: name)
-            puts "What is your password?"
-            password = gets.chomp
-if password != 
-            user = User.find_by(username: name, password: password)
-            end
+        user = User.find_by(username: name)
+        if name == "exit" || user ==nil
+            user = false     
+        else
+            puts "What is your password?" 
+            password = gets.chomp #if no user, then this will trigger CLI to relaunch
+            user = false if password != user.password #if user signs in correctly, then user is used in CLI APP. 
         end
-    end#if user signs in correctly, then user is used in CLI APP. 
-        #if no user, then this will trigger CLI to relaunch
+        user
+    end
 
     def self.sign_up
         puts "Please enter your username."
         name = gets.chomp
-        puts "Enter a password."
-        password = gets.chomp
-        user = User.find_or_create_by(username: name, password: password, display_name: nil)
-        puts "Would you like a nickname that we can address as? (Y/N)"
-        input = gets.chomp
-        if input.downcase == "y"
-            puts "What would you like that name to be?"
-            name_input = gets.chomp
-            puts "Great. Thanks, #{name_input}!"
-            user.display_name = name_input
+        user=false
+        if name=="exit" || User.find_by(username: name)
+            user=false
         else
-            puts "Okay, no worries!"
+            puts "Your username is #{name}. Please keep track of it"
+            puts "Enter a password."
+            password = gets.chomp
+            user = User.create(username: name, password: password, display_name: nil)
+            puts "Would you like a nickname that we can address as? (Y/N)"
+            input = gets.chomp
+            if input.downcase == "y"
+                puts "What would you like that name to be?"
+                name_input = gets.chomp
+                puts "Great. Thanks, #{name_input}!"
+                user.display_name = name_input
+            else
+                puts "Okay, no worries!"
+            end
         end
+        user
     end
         
     def my_favorites
@@ -64,7 +72,13 @@ if password !=
         animal.delete
     end
 
-    def update_user
+    private 
+
+    def self.spacing 
+        puts "Please go back and try again"
+        puts "----------------------------"
+        puts "----------------------------"
+        self.login
     end
 
 end

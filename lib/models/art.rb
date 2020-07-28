@@ -1,6 +1,6 @@
 module Art
     module InstanceMethods
-        def welcome2
+        def welcome
             puts "                                                "
             puts "_______FAVORITE_ENDANGERED_ANIMALS______________" 
             puts "                                                "
@@ -25,7 +25,7 @@ module Art
             puts "________________________________________________"
         end
 
-        def goodbye2
+        def goodbye
             puts "We are sorry to see you go"
             puts "                     .    "
             puts "                    / V\\  "
