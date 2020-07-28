@@ -1,9 +1,8 @@
+require 'pry'
 class Cli
     include Art::InstanceMethods
 
     def startup
-        puts "please type login or sign up"
-        # puts "You can type exit to leave"
         input= gets.strip.downcase
         user ="start up has failed"
         if input=="exit"
@@ -30,10 +29,11 @@ class Cli
 
     def help
         puts "  I can accept the following commands"
-        puts "- help     : displays this help message"
+        puts "- help      : displays this help message"
+        puts "- list      : displays a list of all animals, ten at a time"
         puts "- favorites : displays your list of favorite animals"
-        puts "- search   : search of new animals to add to your list"
-        puts "- exit     : exits this program"
+        puts "- search    : search of new animals to add to your list"
+        puts "- exit      : exits this program"
         puts "Those are the commands that are available"
     end
 
@@ -44,53 +44,48 @@ class Cli
     # end
 
     def turn(user)
+        instructions
+        input=gets.chomp.downcase
+        until input=="exit" do
+            #binding.pry
+            help if input=="help"
+            "test" if input=="test"
+            user.search if input=="search"
+            user.list_animals if input== "list"
+            user.see_favorites if input == "favorites"
+            user.create_favorite if input == "add"
+            #"update" if input == "update" #update is updating user nickname, update username, update password
+            user.remove_animal if input == "delete"
+            instructions
+            input=gets.chomp.downcase
+        end 
+        goodbye
+    end
+
+    # def data_gather (url)
+    #     animals_response = RestClient.get("http://apps.des.qld.gov.au/species/?op=getfamilynames&kingdom=animals&class=mammalia")
+    #     animals_data = JSON.parse(animals_response)
+    #     family=animals_data["Family"]
+    #         animal = nil
+    #         family.each do |animal_hash|
+    #             url=animal_hash["SpeciesUrl"]
+    #             response= RestClient.get(url)
+    #             data=JSON.parse(response)
+    #             data["Species"].each do |indiv_animal| #ScientificName
+    #                 if indiv_animal["ConservationStatus"]["ConservationSignificant"] == true && indiv_animal["ConservationStatus"]["EPBCStatus"]
+    #                     Animal.create(scientific_name: indiv_animal["ScientificName"], common_name: indiv_animal["AcceptedCommonName"], category: indiv_animal["ConservationStatus"]["EPBCStatus"])
+    #                 elsif indiv_animal["ConservationStatus"]["ConservationSignificant"] == true && indiv_animal["ConservationStatus"]["NCAStatus"] && !indiv_animal["ConservationStatus"]["EPBCStatus"]
+    #                     Animal.create(scientific_name: indiv_animal["ScientificName"], common_name: indiv_animal["AcceptedCommonName"], category: indiv_animal["ConservationStatus"]["NCAStatus"])
+    #                 end
+    #             end
+    #         end
+    #     end
+    
+    private 
+    def instructions
         puts "Please enter a command"
         puts "Please type 'help' if you would like a list of commands"
-        input=gets.chomp.downcase
-        if input=="exit"
-            goodbye
-        elsif input=="help"
-            help
-            turn(user)
-        elsif input == "favorites"
-            user.see_favorites
-            puts "You can 'add' to your favorites list"
-            turn(user)
-        elsif input == "add"
-            user.create_favorite
-            #user can add animals to favorite list
-            turn(user)
-        elsif input == "update" 
-            #update is updating user nickname, update username, update password
-            turn(user)
-        elsif input == "delete"
-            user.delete_animal
-            #user can delete animals from users list
-            turn(user)
-        elsif input == "animals"
-            #user can view animls from the users list
-            turn(user)
-        elsif input == "search"
-            #user can utilize our search function
-            puts "What would you like to search by?"
-            puts "please type 'stop' to end search"
-            search_input=""
-            until search_input=="stop"
-                
-                #     #1  or category
-                #     #2 or common_name
-                #     #3 or species
-                #     if search_input== "1" || search_input=="category"
-                #     elsif search_input=="2" || search_input=="common" || search_input=="common name"
-                #     elsif search_input=="3" || search_input=="species"
-                #     end
-                #
-            search_input=gets.chomp.downcase
-            end 
-            turn(user)
-        else 
-            turn(user)
-        end
-    end
+        puts "You can always type 'exit' to exit screen"
+    end 
 
 end 

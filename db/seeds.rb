@@ -1,34 +1,33 @@
 require 'rest-client'
 require 'json'
 require 'pry'
+# require '../lib/models/cli.rb'
 
+User.delete_all
+Animal.delete_all
+Favorite.delete_all
 
-animals_response = RestClient.get("https://apps.des.qld.gov.au/species/?op=getkingdomnames&f=json")
-animals_data = JSON.parse(animals_response)
+#http://apps.des.qld.gov.au/species/?op=getclassnames&kingdom=animals #Main Link
 
-animals_data.each do |animal_hash|
-    user = Animal.create(animal_hash)
-    binding.pry
-end
+Animal.get_database_animals_gov_au
 
-# Animal.create(scientific_name: "Loxodonta africana", common_name: "African Elephant", category: "VU")
-# Animal.create(scientific_name: "Varanus komodoensis", common_name: "Komodo Dragon", category: "VU")
-# Animal.create(scientific_name: "Delphinapterus leucas", common_name: "Beluga Whale", category: "LC")
-# Animal.create(scientific_name: "Gorilla beringei", common_name: "Mountain Gorilla", category: "EN")
-# Animal.create(scientific_name: "Elephas maximus", common_name: "Asian Elephant", category: "EN")
-# Animal.create(scientific_name: "Chelonia mydas", common_name: "Green Turtle", category: "EN")
-# Animal.create(scientific_name: "Cetorhinus maximus", common_name: "Baskin Shark", category: "EN")
-# Animal.create(scientific_name: "Canis simensis", common_name: "Ethiopian Wolf", category: "EN")
-# Animal.create(scientific_name: "Gymnogyps californianus", common_name: "California Condor", category: "CR")
-# Animal.create(scientific_name: "Carcharhinus longimanus", common_name: "Oceanic Whitetip Shark", category: "CR")
-# Animal.create(scientific_name: "Sphyrna lewini", common_name: "Scalloped Hammerhead", category: "CR")
-# Animal.create(scientific_name: "Diceros bicornis", common_name: "Black Rhino", category: "CR")
-# Animal.create(scientific_name: "Rhincodon typus", common_name: "Whale Shark", category: "EN")
-# Animal.create(scientific_name: "Okapia johnstoni", common_name: "Okapi", category: "EN")
-# Animal.create(scientific_name: "Balaenoptera musculus", common_name: "Blue Whale", category: "EN")
-# Animal.create(scientific_name: "Giraffa camelopardalis", common_name: "Giraffe", category: "VU")
+User.create(username: "Ian", password: 1234, display_name: "E")
+User.create(username: "James", password: 1234, display_name: nil)
+User.create(username: "jennyoyo", password: 1234, display_name: "jenn")
+User.create(username: "Tashawn", password: 1234, display_name: nil)
+User.create(username: "Ian G", password: 1234, display_name: nil)
+User.create(username: "Ryan W", password: 1234, display_name: nil)
+User.create(username: "Cody", password: 1234, display_name: nil)
+User.create(username: "Cody", password: 1234, display_name: "Cody.NYC")
+User.create(username: "Ryan", password: 1234, display_name: nil)
+User.create(username: "Brian", password: 1234, display_name: "Lego")
 
-
-# binding.pry
-
-# puts "I BINDED THE ALL THE PRIES"
+Favorite.create(user_id: User.all[1].id, animal_id: Animal.all[1].id)
+Favorite.create(user_id: User.all[2].id, animal_id: Animal.all[2].id)
+Favorite.create(user_id: User.all[3].id, animal_id: Animal.all[4].id)
+Favorite.create(user_id: User.all[1].id, animal_id: Animal.all[4].id)
+Favorite.create(user_id: User.all[2].id, animal_id: Animal.all[5].id)
+Favorite.create(user_id: User.all[3].id, animal_id: Animal.all[6].id)
+Favorite.create(user_id: User.all[1].id, animal_id: Animal.all[7].id)
+Favorite.create(user_id: User.all[2].id, animal_id: Animal.all[7].id)
+Favorite.create(user_id: User.all[3].id, animal_id: Animal.all[7].id)
