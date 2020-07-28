@@ -83,20 +83,20 @@ class Cli
             turn(user)
         else input == "search"
             #user can utilize our search function
-            puts "What would you like to search by?"
-            puts "please type 'stop' to end search"
-                search_input=gets.chomp
-                until search_input=="stop"
-                    #1  or category
-                    #2 or common_name
-                    #3 or species
-                    if search_input== "1" || search_input=="category"
-                    elsif search_input=="2" || search_input=="common" || search_input=="common name"
-                    elsif search_input=="3" || search_input=="species"
-                    end
-                end 
-            turn(user)
-        else turn(user)
+        #     puts "What would you like to search by?"
+        #     puts "please type 'stop' to end search"
+        #         search_input=gets.chomp
+        #         until search_input=="stop"
+        #             #1  or category
+        #             #2 or common_name
+        #             #3 or species
+        #             if search_input== "1" || search_input=="category"
+        #             elsif search_input=="2" || search_input=="common" || search_input=="common name"
+        #             elsif search_input=="3" || search_input=="species"
+        #             end
+        #         end 
+        #     turn(user)
+        # else turn(user)
         end
     end
 

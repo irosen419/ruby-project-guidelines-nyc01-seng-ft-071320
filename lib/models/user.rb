@@ -64,6 +64,7 @@ if password !=
         animal.delete
     end
 
-    def 
+    def update_user
+    end
 
 end
