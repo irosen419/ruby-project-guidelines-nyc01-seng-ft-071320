@@ -1,29 +1,5 @@
-class Cli
-
-    def welcome
-        puts "                                                "
-        puts "_______FAVORITE_ENDANGERED_ANIMALS______________" 
-        puts "                                                "
-        puts "         _By: Jennifer Yoo,                     "
-        puts "        / /         Ian Rosen,                  "
-        puts "        '. \\               James Wu            "
-        puts "         '- \\                  @Class of       "
-        puts "          / /_         .---.           13JUL    "
-        puts "         / |,.\\/--.//    )                     "
-        puts "         |  \\//        )/  /                   "
-        puts "   Art    \\ ' ^ ^    /    )____.----..   6     "
-        puts "  by       '.____.    .___/            \\._)    "
-        puts "   Morfina   .\/.                      ).       "
-        puts "               '\\                      /       "
-        puts "               _/\\/    ).        )    (        "
-        puts "              /#  .!    |        /\\   /        "
-        puts "             \\  C// #  /'-----''/ #  /         "
-        puts "           .  \\ 'C/ |    |    |   |  |      ,  "
-        puts "          \\), .. .'OOO-'. ..'OOO'OOO-'. ..\\(, "
-        puts "________________________________________________" 
-        puts "________Please_SIGNUP_up_or_LOGIN_______________"
-        puts "________________________________________________"
-    end
+class Clie
+include Art::InstanceMethods
 
     def startup
         puts "please type login or sign up"
@@ -59,11 +35,6 @@ class Cli
         puts "- search   : search of new animals to add to your list"
         puts "- exit     : exits this program"
         puts "Those are the commands that are available"
-    end
-
-    def goodbye
-        puts "We are sorry to see you go"
-        puts "Please come back again!"
     end
 
     # def runtime
