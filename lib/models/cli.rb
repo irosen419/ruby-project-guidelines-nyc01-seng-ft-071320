@@ -10,6 +10,7 @@ class Cli
             user=User.sign_up if input == "sign up" || input == "signup"
             user=User.default_user if input == "browse"
             input = turn(user) if user
+            welcome if input == "logout"
             puts "Incorrect Input! You need to sign up or log in" if user==nil
             input=gets.strip.downcase if input != "exit"
         end
@@ -18,19 +19,20 @@ class Cli
 
     def turn(user) #main_menu
         input = ""
-        until input=="exit" do #input== "logout" 
-            #binding.pry
+        until input=="exit" || input== "logout" do  
             "test" if input== "test"
             user.search if input== "search"
             user.top if input=="rankings"
             user.list_animals if input== "list"
             user.see_favorites if input == "favorites"
             user.create_favorite if input == "add"
-            user.change_user_info if input == "update" #update is updating user nickname, update username, update password
+            user.change_user_info if input == "update"
             user.remove_animal if input == "delete"
             input = instructions
         end 
-        input="exit"
+        
+        input="exit" if input != "logout"
+        input
     end
 
     def runtime

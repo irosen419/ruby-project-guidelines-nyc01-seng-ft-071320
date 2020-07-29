@@ -203,4 +203,8 @@ class User < ActiveRecord::Base
         Animal.top_five if input == "top"
     end
 
+    def logout
+
+    end
+
 end
