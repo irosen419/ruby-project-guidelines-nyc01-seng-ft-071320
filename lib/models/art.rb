@@ -43,7 +43,7 @@ module Art
 
         def help
             puts "  I can accept the following commands"
-            menu = ["logout    : logout of current account","help      : displays this help message", "list      : displays a list of all animals, ten at a time", "favorites : displays your list of favorite animals", "search    : search of new animals to add to your list","exit      : exits this program"].sort_by { |word| word.downcase }
+            menu = ["logout    : logout of current account", "delete    : remove an animal from your favorites","help      : displays this help message", "list      : displays a list of all animals, ten at a time", "favorites : displays your list of favorite animals", "search    : search of new animals to add to your list","exit      : exits this program"].sort_by { |word| word.downcase }
             menu.each{|item|puts "- #{item}"}
         end
 
