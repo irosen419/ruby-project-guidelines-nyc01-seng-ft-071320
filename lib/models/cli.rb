@@ -26,13 +26,13 @@ class Cli
         input=gets.strip.downcase
         until input=="exit" do #input== "logout" 
             #binding.pry
-            help if input=="help"
-            "test" if input=="test"
-            user.search if input=="search"
+            help if input== "help"
+            "test" if input== "test"
+            user.search if input== "search"
             user.list_animals if input== "list"
             user.see_favorites if input == "favorites"
             user.create_favorite if input == "add"
-            #"update" if input == "update" #update is updating user nickname, update username, update password
+            user.change_user_info if input == "update" #update is updating user nickname, update username, update password
             user.remove_animal if input == "delete"
             instructions
             input=gets.chomp.downcase

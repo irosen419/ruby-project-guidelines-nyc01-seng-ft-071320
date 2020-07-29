@@ -32,10 +32,22 @@ class Animal < ActiveRecord::Base
         end
     end
 
-    def self.most_popular
-        User.all.each do |user|
-            array = user.favorites.map {|fav| fav.animal_id}
-        end
+    def self.id_occurence_in_favorites
+        Favorite.all.each_with_object(Hash.new(0)) {|key, hash| hash[key.animal_id] += 1}
+    end
+
+    def self.descending_popularity
+        aoa = id_occurence_in_favorites.sort_by{|k, v| -v}
+        aoa.map {|array| array[0]}.map{|id| self.all.find(id)}[0...5] 
+    end
+
+    def self.ascending_popularity
+        aoa = id_occurence_in_favorites.sort_by{|k, v| v}
+        aoa.map {|array| array[0]}.map{|id| self.all.find(id)}[0...5]
+    end
+
+    def self.lonely_animals
+        self.all.select {|animal| animal.favorites.length == 0}.sample(5)
     end
 
 end
