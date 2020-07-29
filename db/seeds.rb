@@ -1,13 +1,10 @@
 require 'rest-client'
 require 'json'
 require 'pry'
-# require '../lib/models/cli.rb'
 
 User.delete_all
 Animal.delete_all
 Favorite.delete_all
-
-#http://apps.des.qld.gov.au/species/?op=getclassnames&kingdom=animals #Main Link
 
 Animal.get_database_animals_gov_au
 
@@ -31,3 +28,10 @@ Favorite.create(user_id: User.all[4].id, animal_id: Animal.all[5].id)
 Favorite.create(user_id: User.all[5].id, animal_id: Animal.all[6].id)
 Favorite.create(user_id: User.all[2].id, animal_id: Animal.all[6].id)
 Favorite.create(user_id: User.all[0].id, animal_id: Animal.all[6].id)
+
+#https://apps.des.qld.gov.au/species/?op=getorganisations
+# main_url = RestClient.get("https://apps.des.qld.gov.au/species/?op=getorganisations")
+# animals_data = JSON.parse(main_url)
+
+# binding.pry
+# puts "I pried into somewhere I shouldn't have"

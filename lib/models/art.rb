@@ -34,8 +34,9 @@ module Art
 
         def help
             puts "      I can accept the following commands"
-            menu = ["update    : make updates to user info", "logout    : logout of current account", "delete    : remove an animal from your favorites", "list      : displays a list of all animals, ten at a time", "favorites : displays your list of favorite animals", "search    : search of new animals to add to your list","exit      : exits this program"].sort_by { |word| word.downcase }
-            menu.each{|item|puts "- #{item}"}
+            menu = ["rankings  : view different animal rankings", "update    : make updates to user info", "logout    : logout of current account", "delete    : remove an animal from your favorites", "list      : displays a list of all animals, ten at a time", "favorites : displays your list of favorite animals", "search    : search of new animals to add to your list","exit      : exits this program"].sort_by { |word| word.downcase }
+            menu.each {|item|puts "- #{item}"}
+            puts "\n"
         end
         
         def instructions
@@ -53,12 +54,18 @@ module Art
     end
 end
 
+def top_instructions
+    puts"Type 'top' to see the Top 5 most popular animals"
+    puts"Type 'sad' to see the Top 5 most sad animals"
+    gets.chomp.downcase
+end
+
 def search_instructions
     puts "                   ----- SEARCH MENU -----                             "
     puts "If you would like to find a particular type of animal, type 'animal'."
     puts "If you would like to search by category, type 'category'."
     puts "You may type 'exit' at any time."
-    input = gets.chomp.downcase
+    gets.chomp.downcase
 end
 
 def no_favorites 
@@ -66,5 +73,9 @@ def no_favorites
     puts "If you would like to add a new favorite animal, please type 'add' in the main menu."
 end
 
+
+def message_board (array)
+    puts ""
+end
 
 #########TESTING##########

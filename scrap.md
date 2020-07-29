@@ -3,6 +3,7 @@ require 'json'
 require 'pry'
 
 Animal.delete_all
+
 #http://apps.des.qld.gov.au/species/?op=getclassnames&kingdom=animals #Main Link
 
 animals_response = RestClient.get("http://apps.des.qld.gov.au/species/?op=getfamilynames&kingdom=animals&class=mammalia")
@@ -46,3 +47,5 @@ end
                     #     end
                     #
                     #        search_input=gets.chomp.downcase
+
+                    

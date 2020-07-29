@@ -77,7 +77,7 @@ class User < ActiveRecord::Base
                 show_length = anny[current...current+5].each {|fav| puts fav}
                 current += 5
                 input = "exit" if show_length.length < 5
-                puts "Type 'exit' if you would like to exit or any key to see more favorites."
+                puts "\n Type 'exit' if you would like to exit or any key to see more favorites."
                 input = gets.chomp if show_length.length >= 5
 
             end
@@ -102,7 +102,7 @@ class User < ActiveRecord::Base
     end
 
     def create_favorite
-        puts "Please choose one animal, by their common name, from the following list: "
+        puts "\n Please choose one animal, by their common name, from the following list: "
         input = list_animals
         return if input == 'exit' || !input
         name_search(input)
@@ -112,7 +112,7 @@ class User < ActiveRecord::Base
         if self.my_favorites.empty?
             no_favorites #This is just a method for words
         else
-            puts "Please choose one animal, by their common name, from the following list:"
+            puts "\n Please choose one animal, by their common name, from the following list:"
             self.see_favorites
             input = gets.chomp.downcase
             animal = Animal.all.find_by(common_name: input)
@@ -121,7 +121,7 @@ class User < ActiveRecord::Base
         end
     end
     
-    def search #doesn't exit
+    def search
         input=""
         until input == "exit" do
             search_by_animal if input == "animal"
@@ -175,8 +175,8 @@ class User < ActiveRecord::Base
     
     def change_user_info
         puts "    You can make the following changes to your account"
-        menu = ["password     : update your password", "username     : update your username", "display name : update your display name", "exit         : return to the main menu"].sort_by { |word| word.downcase }
-            menu.each{|item|puts "- #{item}"}
+        menu = ["top          : update your password","password     : update your password", "username     : update your username", "display name : update your display name", "exit         : return to the main menu"].sort_by { |word| word.downcase }    
+        menu.each{|item|puts "- #{item}"}
         input = gets.strip.downcase
         if input == "username"
             puts "Please type in your new username:"
@@ -195,6 +195,12 @@ class User < ActiveRecord::Base
 
     def self.default_user
         User.create(username: "Unknown-Browser", password: "irosen1234", display_name: "Guest")
+    end
+
+    def top
+        input = top_instructions
+        Animal.lonely_animals if input == "sad"
+        Animal.top_five if input == "top"
     end
 
 end

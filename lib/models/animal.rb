@@ -36,18 +36,35 @@ class Animal < ActiveRecord::Base
         Favorite.all.each_with_object(Hash.new(0)) {|key, hash| hash[key.animal_id] += 1}
     end
 
-    def self.descending_popularity
+    def self.top_five
         aoa = id_occurence_in_favorites.sort_by{|k, v| -v}
-        aoa.map {|array| array[0]}.map{|id| self.all.find(id)}[0...5] 
+        aoa = aoa.map {|array| array[0]}.map{|id| self.all.find(id)}[0...5]
+        
+        counter = 1
+        # until counter == 6
+            aoa.each do |animal|
+                puts "#{counter}. #{animal.common_name.capitalize}: #{animal.category.capitalize}"
+                counter += 1
+                puts "\n\n" if count == 5
+            end
+        # end
     end
 
-    def self.ascending_popularity
-        aoa = id_occurence_in_favorites.sort_by{|k, v| v}
-        aoa.map {|array| array[0]}.map{|id| self.all.find(id)}[0...5]
-    end
+    # def self.ascending_popularity
+    #     aoa = id_occurence_in_favorites.sort_by{|k, v| v}
+    #     aoa.map {|array| array[0]}.map{|id| self.all.find(id)}[0...5]
+    # end
 
     def self.lonely_animals
-        self.all.select {|animal| animal.favorites.length == 0}.sample(5)
+        array = self.all.select {|animal| animal.favorites.length == 0}.sample(5)
+        counter = 1
+       # until counter == 6
+            array.each do |animal|
+                puts "#{counter}. #{animal.common_name.capitalize}: #{animal.category.capitalize}"
+                counter += 1
+                puts "\n\n" if counter == 5
+            end
+       # end
     end
 
 end

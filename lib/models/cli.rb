@@ -6,15 +6,10 @@ class Cli
         input= gets.strip.downcase
         user = nil
         until input=="exit"do
-            user=User.login if input == "login"
-            user=User.login if input == "log in"
-            user=User.sign_up if input == "sign up"
-            user=User.sign_up if input == "signup"
-            # binding.pry
+            user=User.login if input == "login" || input == "log in"
+            user=User.sign_up if input == "sign up" || input == "signup"
             user=User.default_user if input == "browse"
-            # binding
             input = turn(user) if user
-            # binding.pry
             puts "Incorrect Input! You need to sign up or log in" if user==nil
             input=gets.strip.downcase if input != "exit"
         end
@@ -27,6 +22,7 @@ class Cli
             #binding.pry
             "test" if input== "test"
             user.search if input== "search"
+            user.top if input=="rankings"
             user.list_animals if input== "list"
             user.see_favorites if input == "favorites"
             user.create_favorite if input == "add"
@@ -47,5 +43,7 @@ class Cli
     def default
         User.default_user
     end
+
+
 
 end 
