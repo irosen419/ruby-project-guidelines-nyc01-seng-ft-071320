@@ -1,16 +1,22 @@
 class User < ActiveRecord::Base
     has_many :favorites
     has_many :animals, through: :favorites
+    include Art::InstanceMethods
 
     def self.login
         puts "Welcome Back! What is your Username?"
         name = gets.strip
         user = User.find_by(username: name)
-        if name == "exit" || user ==nil
+        if name == "exit" || user ==nil #if you type in a name that login cannot find, there is nothing
+            puts "We were not able to find a user with the Username provided" if user == nil
+            puts "You have chosen to leave the login screen" if name == "exit"
+            puts "You need to signup, login, or browse to access our animals!"
             user = false     
         else
             puts "What is your password?" 
             password = gets.strip #if no user, then this will trigger CLI to relaunch
+            puts "You have typed the wrong password " if password != user.password 
+            puts "You need to signup, login, or browse to access our animals!" if password != user.password 
             user = false if password != user.password #if user signs in correctly, then user is used in CLI APP. 
         end
         user
@@ -19,8 +25,11 @@ class User < ActiveRecord::Base
     def self.sign_up
         puts "Please enter your username: "
         name = gets.strip
-        user=false
+        user="Ther is something wrong with signup"
         if name=="exit" || User.find_by(username: name)
+            puts "#{name} is already taken." if User.find_by(username: name)
+            puts "You have chosen to leave the sign up screen" if name == "exit"
+            puts "You need to signup, login, or browse to access our animals!"
             user=false
         else
             puts "Your username is #{name}. Please keep track of it."
@@ -152,29 +161,14 @@ class User < ActiveRecord::Base
         end
     end
 
-    # def update_user
-    #     puts "Would you like to update your username, password, or display name?"
-    #     puts "------------------------------------------------------------------"
-    #     puts "If you would like to change your username, type 'username'"
-    #     puts "If you would like to change your password, type 'password'"
-    #     puts "If you would like to change display name, type 'display name'"
-    #     input = gets.strip.downcase
-    #     if input == "username"
-    #         puts "Please type in your new username:"
-    #         user_input = gets.strip
-    #           find_user = User.find_by(user_id: self.id)
-#               find_user.update(username: user_input)
-    #     elsif input == "password"
-    #         puts "Please type in your new password"
-            
-    #     end
-
-    # end
-
     def name_search(input)
         animal_input = input
         animal = Animal.all.find_by(common_name: animal_input)
         Favorite.find_or_create_by(user_id: self.id, animal_id: animal.id)   
+    end
+
+    def self.default_user
+        User.create(username: "Unknown-Browser", password: "irosen1234", display_name: "UB")
     end
 
 end

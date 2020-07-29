@@ -2,51 +2,29 @@ require 'pry'
 class Cli
     include Art::InstanceMethods
 
-    def startup
+    def startup #change to launchpoint
         input= gets.strip.downcase
-        user ="start up has failed"
-        if input=="exit"
-            user=goodbye
-        elsif input == "login"
-            user=User.login
-            if user == false
-                puts "your username or password is incorrect"
-                startup
-            end
-            user 
-        elsif input == "sign up" || input == "signup"
-            user=User.sign_up
-            if user==false
-                puts "username is already taken"
-                startup
-            end 
-            user
-        else
-            startup
+        user =nil
+        until input=="exit"do
+            user=User.login if input == "login"
+            user=User.login if input == "log in"
+            user=User.sign_up if input == "sign up"
+            user=User.sign_up if input == "signup"
+            # binding.pry
+            user=User.default_user if input == "browse"
+            # binding
+            input = turn(user) if user
+            # binding.pry
+            puts "Incorrect Input! You need to sign up or log in" if user==nil
+            input=gets.strip.downcase if input != "exit"
         end
-        user
+        goodbye
     end
 
-    def help
-        puts "  I can accept the following commands"
-        puts "- help      : displays this help message"
-        puts "- list      : displays a list of all animals, ten at a time"
-        puts "- favorites : displays your list of favorite animals"
-        puts "- search    : search of new animals to add to your list"
-        puts "- exit      : exits this program"
-        puts "Those are the commands that are available"
-    end
-
-    # def runtime
-    #     welcome 
-    #     user = startup
-    #     turn(user)
-    # end
-
-    def turn(user)
+    def turn(user) #main_menu
         instructions
-        input=gets.chomp.downcase
-        until input=="exit" do
+        input=gets.strip.downcase
+        until input=="exit" do #input== "logout" 
             #binding.pry
             help if input=="help"
             "test" if input=="test"
@@ -59,33 +37,20 @@ class Cli
             instructions
             input=gets.chomp.downcase
         end 
-        goodbye
+        input="exit"
     end
 
-    # def data_gather (url)
-    #     animals_response = RestClient.get("http://apps.des.qld.gov.au/species/?op=getfamilynames&kingdom=animals&class=mammalia")
-    #     animals_data = JSON.parse(animals_response)
-    #     family=animals_data["Family"]
-    #         animal = nil
-    #         family.each do |animal_hash|
-    #             url=animal_hash["SpeciesUrl"]
-    #             response= RestClient.get(url)
-    #             data=JSON.parse(response)
-    #             data["Species"].each do |indiv_animal| #ScientificName
-    #                 if indiv_animal["ConservationStatus"]["ConservationSignificant"] == true && indiv_animal["ConservationStatus"]["EPBCStatus"]
-    #                     Animal.create(scientific_name: indiv_animal["ScientificName"], common_name: indiv_animal["AcceptedCommonName"], category: indiv_animal["ConservationStatus"]["EPBCStatus"])
-    #                 elsif indiv_animal["ConservationStatus"]["ConservationSignificant"] == true && indiv_animal["ConservationStatus"]["NCAStatus"] && !indiv_animal["ConservationStatus"]["EPBCStatus"]
-    #                     Animal.create(scientific_name: indiv_animal["ScientificName"], common_name: indiv_animal["AcceptedCommonName"], category: indiv_animal["ConservationStatus"]["NCAStatus"])
-    #                 end
-    #             end
-    #         end
-    #     end
+    def runtime
+        welcome 
+        startup
+    end
     
     private 
+
     def instructions
-        puts "Please enter a command"
-        puts "Please type 'help' if you would like a list of commands"
-        puts "You can always type 'exit' to exit screen"
+        puts "You are in the 'Main Menu. Please enter a command"
+        puts "   Please type 'help' for a list of commands"
+        puts "   You can always type 'exit' to exit screen"
     end 
 
 end 
