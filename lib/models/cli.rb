@@ -22,20 +22,17 @@ class Cli
     end
 
     def turn(user) #main_menu
-        instructions(user)
-        input=gets.strip.downcase
+        input = ""
         until input=="exit" do #input== "logout" 
             #binding.pry
-            help if input== "help"
             "test" if input== "test"
             user.search if input== "search"
             user.list_animals if input== "list"
             user.see_favorites if input == "favorites"
             user.create_favorite if input == "add"
-            user.change_user_info if input == "update user" #update is updating user nickname, update username, update password
+            user.change_user_info if input == "update" #update is updating user nickname, update username, update password
             user.remove_animal if input == "delete"
-            instructions
-            input=gets.chomp.downcase
+            input = instructions
         end 
         input="exit"
     end
@@ -47,11 +44,8 @@ class Cli
     
     private 
 
-    def instructions(user)
-        puts "      Welcome back, #{user.display_name}!"
-        puts "You are in the 'Main Menu. Please enter a command"
-        puts "   Please type 'help' for a list of commands"
-        puts "   You can always type 'exit' to exit screen"
-    end 
+    def default
+        User.default_user
+    end
 
 end 

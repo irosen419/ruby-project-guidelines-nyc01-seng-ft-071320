@@ -23,9 +23,8 @@ class User < ActiveRecord::Base
     end
 
     def self.sign_up
-        puts "Please enter your username: "
+        user = puts "Please enter your username: "
         name = gets.strip
-        user="Ther is something wrong with signup"
         if name=="exit" || User.find_by(username: name)
             puts "#{name} is already taken." if User.find_by(username: name)
             puts "You have chosen to leave the sign up screen" if name == "exit"
@@ -56,8 +55,7 @@ class User < ActiveRecord::Base
 
     def see_favorites
         if self.my_favorites.empty?
-            puts "You currently do not have any favorites."
-            puts "If you would like to add a new favorite animal, please type 'add' in the main menu."
+            no_favorites #This is just words in art"
         else
             puts "------------"
             puts "MY FAVORITES"
@@ -87,9 +85,9 @@ class User < ActiveRecord::Base
     end
 
     def list_animals #doesn't add to favorite when typing in animal name after list
-        anny= Animal.all.map {|animal| animal.common_name}
+        anny= Animal.all.map {|animal| animal.common_name}.shuffle
         current=0
-        puts "Here are 10 animals"
+        puts "\n Here are 10 animals"
         input = nil
         until anny.include?(input) || input == 'exit' do
             test_length = anny[current...current+10].each do |animal|
@@ -97,8 +95,7 @@ class User < ActiveRecord::Base
             end
             current += 10
             input = 'exit' if test_length.length < 10
-            puts "Type the name of the animal you would like to add to you favorites."
-            puts "Or you can type 'next' to see more animals or type 'exit' to exit."
+            puts "\n Type 'next' to see more animals or type 'exit' to exit."
             input = gets.chomp.downcase if test_length.length >= 10
         end
         input
@@ -113,8 +110,7 @@ class User < ActiveRecord::Base
 
     def remove_animal
         if self.my_favorites.empty?
-            puts "You currently do not have any favorites."
-            puts "You need to add to your favorites."
+            no_favorites #This is just a method for words
         else
             puts "Please choose one animal, by their common name, from the following list:"
             self.see_favorites
@@ -124,79 +120,63 @@ class User < ActiveRecord::Base
             animal_to_delete.delete
         end
     end
-
+    
     def search #doesn't exit
-        puts "                                                           "
-        puts "If you would like to find a particular type of animal, type 'animal'."
-        puts "If you would like to search by category, type 'category'."
-        puts "You may type 'exit' at any time."
-
-        input = ""
+        input=""
         until input == "exit" do
-            result = search_by_animal if input == "animal"
-            result search_by_category if input == "category"
-            input = gets.chomp
-        end 
+            search_by_animal if input == "animal"
+            search_by_category if input == "category"
+            input = search_instructions
+        end
+        puts "Thank you for searching"
     end
 
     def search_by_animal
-        input = ""
-        until input == "exit"
-            if input != "exit"
-                puts "You may type the full name or partial name of the animal you are looking for: "
-                animal_input = gets.chomp.downcase
-                puts "\n"
-                animal_array = Animal.all.select do |animal|
-                        animal.common_name.include?(animal_input)
-                end
-                if animal_array.length > 0
-                    animal_array.each {|animal| puts animal.common_name.capitalize}
-                    favoritize_after_search
-                elsif animal_array.length == 0 && input != ""
-                    puts "Sorry, there are no threatened #{animal_input}s in Australia. Please try again."
-                end
-            end
-        input = gets.strip.downcase
+        puts "\n You may type the full name or partial name of the animal you are looking for: "
+        animal_input = gets.chomp.downcase
+        puts "\n"
+        animal_array = Animal.all.select do |animal|
+            animal.common_name.include?(animal_input)
+        end
+        if animal_array.length > 0
+            animal_array.each {|animal| puts animal.common_name.capitalize}
+            favoritize_after_search
+        elsif animal_array.length == 0
+            puts "\n Sorry, there are no threatened #{animal_input.pluralize} in Australia. Please try again.\n\n"
         end
     end
 
     def search_by_category
-        puts "The available categories are: Vulnerable, Endangered, Critically Endangered, Near threatened, Extinct, Special least concern, Conservation Dependent, Least concern, Extinct in the wild"
+        puts "\n The available categories are: Vulnerable, Endangered, Critically Endangered, Near threatened, Extinct, Special least concern, Conservation Dependent, Least concern, Extinct in the wild"
+        puts "Which category would you like to view?"
         input = gets.chomp.downcase
         category_array = Animal.all.where(category: input)
         category_array.each { |animal| puts animal.common_name.capitalize}
-        puts "Would you like to look at the animals in a category?"
+
         favoritize_after_search
     end  
 
     def favoritize_after_search
-        puts "Would you like to add any of these animals to your favorites? (Y/N)"
-        input=gets.strip.downcase
+        puts "\n Please type the animal that you want to add to your favorites."
+        input=gets.chomp.downcase
         until input == "exit"
-            if input=="y"
-                puts "Please type the animal that you want to add to your favorites!"
-                animal_input=gets.strip.downcase
-                name_search(animal_input)
-            else 
-                input = "exit"
-            end
-            input=gets.strip.downcase if input!= "exit"
+            search = name_search(input)
+            puts "\n You have added #{input.capitalize} to your favorites!" if search != nil
+            input = "exit"
         end
     end
 
     def name_search(input)
         animal_input = input
         animal = Animal.all.find_by(common_name: animal_input)
-        Favorite.find_or_create_by(user_id: self.id, animal_id: animal.id)   
+        Favorite.find_or_create_by(user_id: self.id, animal_id: animal.id) if animal
+        puts "\n You might have mispelled that name. Please try again." if !animal
     end
     
     def change_user_info
-        puts "Would you like to update your username, password, or display name?"
-        puts "------------------------------------------------------------------"
-        puts "If you would like to change your username, type 'username'"
-        puts "If you would like to change your password, type 'password'"
-        puts "If you would like to change your display name, type 'display name'"
-        puts "You can type 'exit' to return to the main screen."
+        puts "    You can make the following changes to your account"
+        menu = ["password     : update your password", "username     : update your username", "display name : update your display name", "exit         : return to the main menu"].sort_by { |word| word.downcase }
+            menu.each{|item|puts "- #{item}"}
         input = gets.strip.downcase
         if input == "username"
             puts "Please type in your new username:"

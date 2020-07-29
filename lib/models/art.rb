@@ -1,29 +1,5 @@
 module Art
     module InstanceMethods
-        def welcome2
-            puts "                                                "
-            puts "______FAVORITE_AUS_ENDANGERED_ANIMALS___________" 
-            puts "                                                "
-            puts "         _By: Jennifer Yoo,                     "
-            puts "        / /         Ian Rosen,                  "
-            puts "        '. \\               James Wu            "
-            puts "         '- \\                  @Class of       "
-            puts "          / /_         .---.           13JUL    "
-            puts "         / |,.\\/--.//    )                     "
-            puts "         |  \\//        )/  /                   "
-            puts "   Art    \\ ' ^ ^    /    )____.----..   6     "
-            puts "  by       '.____.    .___/            \\._)    "
-            puts "   Morfina   .\/.                      ).       "
-            puts "               '\\                      /       "
-            puts "               _/\\/    ).        )    (        "
-            puts "              /#  .!    |        /\\   /        "
-            puts "             \\  C/ #  /'-----''/ #  /          "
-            puts "           .  \\ 'C/ |    |    |   |  |      ,  "
-            puts "          \\),/ .. .'OOO-'. ..'OOO'OOO-'. ..\\(,"
-            puts "________________________________________________" 
-            puts "__________Please_SIGNUP_up_or_LOGIN_____________"
-            puts "__________Or_type_BROWSE_to_check_us_out________"
-        end
 
         def welcome
         puts"  FAVORITE AUSSIE  "
@@ -36,36 +12,56 @@ module Art
         puts"  \\_,./__,__: |   "
         puts"          |   |    "
         puts"          |   |    "
-        puts"SIGNUP-OR-LOGIN----"
-        puts"---------OR-BROWSE-"
+        puts"SIGNUP OR LOGIN    "
+        puts"         OR BROWSE "
         end
 
         def goodbye
-            puts "We are sorry to see you go!"
-            puts "                     .    "
-            puts "                    / V\\ "
-            puts "                  / `  /  "
-            puts "                 <<   |   "
-            puts "                 /    |   "
-            puts "               /      |   "
-            puts "             /        |   "
-            puts "           /    \\  \\ /  "
-            puts "          (      ) | |    "
-            puts "  ________|   _/_  | |    "
-            puts "<__________\\______)\\__) "
-            "     Please come back again!   "
+        puts "   We are sorry to see you go!  "
+        puts "     Art by Joan G. Stark       "
+        puts "            |\\._                "
+        puts "            |  o o__             "
+        puts "             \\   _.3            "
+        puts "        ,    `) (               "
+        puts "        )\\   /__\\__            "
+        puts "       / /  / -._);_)           "
+        puts "      |  `\\/  \ __|\            "
+        puts "       \\  ;    ) / )           "
+        puts "       `\\|   /__/ /__          "
+        puts "     jgs `\\______)___)         "
+             "   Please come back again!      "
         end
 
         def help
-            puts "  I can accept the following commands"
-            menu = ["logout    : logout of current account", "delete    : remove an animal from your favorites","help      : displays this help message", "list      : displays a list of all animals, ten at a time", "favorites : displays your list of favorite animals", "search    : search of new animals to add to your list","exit      : exits this program"].sort_by { |word| word.downcase }
+            puts "      I can accept the following commands"
+            menu = ["update    : make updates to user info", "logout    : logout of current account", "delete    : remove an animal from your favorites", "list      : displays a list of all animals, ten at a time", "favorites : displays your list of favorite animals", "search    : search of new animals to add to your list","exit      : exits this program"].sort_by { |word| word.downcase }
             menu.each{|item|puts "- #{item}"}
         end
+        
+        def instructions
+            puts "            ----- MAIN MENU -----   "
+            puts "\n"
+            help
+            gets.chomp.downcase
+        end 
 
         def login_fail
-            puts "your username or password is incorrect"
+            puts "Your username or password is incorrect"
             puts "Please type sign up, login, or browse"
         end
 
     end
+end
+
+def search_instructions
+    puts "                   ----- SEARCH MENU -----                             "
+    puts "If you would like to find a particular type of animal, type 'animal'."
+    puts "If you would like to search by category, type 'category'."
+    puts "You may type 'exit' at any time."
+    input = gets.chomp.downcase
+end
+
+def no_favorites 
+    puts "You currently do not have any favorites."
+    puts "If you would like to add a new favorite animal, please type 'add' in the main menu."
 end
