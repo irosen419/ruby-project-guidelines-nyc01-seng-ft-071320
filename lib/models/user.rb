@@ -62,28 +62,38 @@ class User < ActiveRecord::Base
             puts "------------"
             puts "MY FAVORITES"
             puts "------------"
+            count = 1
+            array_of_favs = []
             self.my_favorites.each do |favorite|
-                count = 1
                 Animal.all.each do |animal|
                     if animal.id == favorite.animal_id
-                        puts "#{count}. #{animal.common_name.capitalize}"
-                        puts "Scientific name: #{animal.scientific_name.capitalize}"
-                        puts "Conservation status: #{animal.category}."
+                        array_of_favs << "#{count}. #{animal.common_name.capitalize} | Scientific name: #{animal.scientific_name.capitalize} | Conservation status: #{animal.category.capitalize}.\n\n"
                         count += 1
                     end  
                 end
+            end
+            input = nil
+            anny = array_of_favs
+            current = 0
+            until input == "exit" do
+                show_length = anny[current...current+5].each {|fav| puts fav}
+                current += 5
+                input = "exit" if show_length.length < 5
+                puts "Type 'exit' if you would like to exit or any key to see more favorites."
+                input = gets.chomp if show_length.length >= 5
+
             end
         end
     end
 
     def list_animals #doesn't add to favorite when typing in animal name after list
-        anny= Animal.all.map {|animal| animal.common_name.capitalize}.compact
+        anny= Animal.all.map {|animal| animal.common_name}
         current=0
         puts "Here are 10 animals"
         input = nil
         until anny.include?(input) || input == 'exit' do
             test_length = anny[current...current+10].each do |animal|
-                puts animal
+                puts animal.capitalize
             end
             current += 10
             input = 'exit' if test_length.length < 10
@@ -120,28 +130,34 @@ class User < ActiveRecord::Base
         puts "If you would like to find a particular type of animal, type 'animal'."
         puts "If you would like to search by category, type 'category'."
         puts "You may type 'exit' at any time."
-       # input = ""
-        input = gets.chomp
+
+        input = ""
         until input == "exit" do
-            if input == "animal"
-                search_by_animal
-            elsif input == "category"
-                search_by_category
-            end
-            search
+            result = search_by_animal if input == "animal"
+            result search_by_category if input == "category"
+            input = gets.chomp
         end 
     end
 
-    def search_by_animal #need to include "Sorry no animal by that name, please try again"
-        puts "You may type the full name or partial name of the animal you are looking for: "
-        animal_input = gets.chomp.downcase
-        animal_array = Animal.all.select do |animal|
-            if animal.common_name
-                animal.common_name.include?(animal_input)
+    def search_by_animal
+        input = ""
+        until input == "exit"
+            if input != "exit"
+                puts "You may type the full name or partial name of the animal you are looking for: "
+                animal_input = gets.chomp.downcase
+                puts "\n"
+                animal_array = Animal.all.select do |animal|
+                        animal.common_name.include?(animal_input)
+                end
+                if animal_array.length > 0
+                    animal_array.each {|animal| puts animal.common_name.capitalize}
+                    favoritize_after_search
+                elsif animal_array.length == 0 && input != ""
+                    puts "Sorry, there are no threatened #{animal_input}s in Australia. Please try again."
+                end
             end
+        input = gets.strip.downcase
         end
-        animal_array.each {|animal| puts animal.common_name.capitalize}
-        favoritize_after_search
     end
 
     def search_by_category
@@ -162,17 +178,16 @@ class User < ActiveRecord::Base
     def favoritize_after_search
         puts "Would you like to add any of these animals to your favorites? (Y/N)"
         input=gets.strip.downcase
-        if input=="y"
-            puts "Please type the animal that you want to add to your favorites!"
-            input=gets.strip.downcase
-            name_search(input)
+        until input == "exit"
+            if input=="y"
+                puts "Please type the animal that you want to add to your favorites!"
+                animal_input=gets.strip.downcase
+                name_search(animal_input)
+            else 
+                input = "exit"
+            end
+            input=gets.strip.downcase if input!= "exit"
         end
-    end
-
-    def name_search(input)
-        animal_input = input
-        animal = Animal.all.find_by(common_name: animal_input)
-        Favorite.find_or_create_by(user_id: self.id, animal_id: animal.id)
     end
     
     def change_user_info
@@ -199,7 +214,7 @@ class User < ActiveRecord::Base
     end
 
     def self.default_user
-        User.create(username: "Unknown-Browser", password: "irosen1234", display_name: "UB")
+        User.create(username: "Unknown-Browser", password: "irosen1234", display_name: "Guest")
     end
 
 end

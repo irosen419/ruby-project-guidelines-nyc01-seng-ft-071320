@@ -4,7 +4,7 @@ class Cli
 
     def startup #change to launchpoint
         input= gets.strip.downcase
-        user =nil
+        user = nil
         until input=="exit"do
             user=User.login if input == "login"
             user=User.login if input == "log in"
@@ -22,7 +22,7 @@ class Cli
     end
 
     def turn(user) #main_menu
-        instructions
+        instructions(user)
         input=gets.strip.downcase
         until input=="exit" do #input== "logout" 
             #binding.pry
@@ -32,7 +32,7 @@ class Cli
             user.list_animals if input== "list"
             user.see_favorites if input == "favorites"
             user.create_favorite if input == "add"
-            user.change_user_info if input == "update" #update is updating user nickname, update username, update password
+            user.change_user_info if input == "update user" #update is updating user nickname, update username, update password
             user.remove_animal if input == "delete"
             instructions
             input=gets.chomp.downcase
@@ -47,7 +47,8 @@ class Cli
     
     private 
 
-    def instructions
+    def instructions(user)
+        puts "      Welcome back, #{user.display_name}!"
         puts "You are in the 'Main Menu. Please enter a command"
         puts "   Please type 'help' for a list of commands"
         puts "   You can always type 'exit' to exit screen"

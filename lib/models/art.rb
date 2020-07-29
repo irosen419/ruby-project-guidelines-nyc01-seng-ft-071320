@@ -1,6 +1,6 @@
 module Art
     module InstanceMethods
-        def welcome
+        def welcome2
             puts "                                                "
             puts "______FAVORITE_AUS_ENDANGERED_ANIMALS___________" 
             puts "                                                "
@@ -23,6 +23,21 @@ module Art
             puts "________________________________________________" 
             puts "__________Please_SIGNUP_up_or_LOGIN_____________"
             puts "__________Or_type_BROWSE_to_check_us_out________"
+        end
+
+        def welcome
+        puts"  FAVORITE AUSSIE  "
+        puts"     ANIMALS       "
+        puts"          |   |//## "
+        puts"    n___n |   |//   "
+        puts"  ._\\'O'/___   /   "
+        puts"  ['o']  ___: |    "
+        puts"  /  ,-': |_  |    "
+        puts"  \\_,./__,__: |   "
+        puts"          |   |    "
+        puts"          |   |    "
+        puts"SIGNUP-OR-LOGIN----"
+        puts"---------OR-BROWSE-"
         end
 
         def goodbye
