@@ -1,6 +1,9 @@
 class User < ActiveRecord::Base
     has_many :favorites
     has_many :animals, through: :favorites
+    has_many :donations
+    has_many :charities, through: :donations
+
     include Art::InstanceMethods
 
     def self.login
@@ -203,7 +206,7 @@ class User < ActiveRecord::Base
         Animal.top_five if input == "top"
     end
 
-    def logout
+    def make_a_donation
 
     end
 
