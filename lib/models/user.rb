@@ -67,7 +67,7 @@ class User < ActiveRecord::Base
         end
     end
 
-    def list_animals
+    def list_animals #doesn't add to favorite when typing in animal name after list
         anny= Animal.all.map {|animal| animal.common_name.capitalize}.compact
         current=0
         puts "Here are 10 animals"
@@ -106,11 +106,13 @@ class User < ActiveRecord::Base
         end
     end
 
-    def search
+    def search #doesn't exit
+        puts "                                                           "
         puts "If you would like to find a particular type of animal, type 'animal'."
         puts "If you would like to search by category, type 'category'."
         puts "You may type 'exit' at any time."
-        input = ""
+       # input = ""
+        input = gets.chomp
         until input == "exit" do
             if input == "animal"
                 search_by_animal
@@ -121,12 +123,12 @@ class User < ActiveRecord::Base
         end 
     end
 
-    def search_by_animal
+    def search_by_animal #need to include "Sorry no animal by that name, please try again"
         puts "You may type the full name or partial name of the animal you are looking for: "
-        input = gets.chomp.downcase
+        animal_input = gets.chomp.downcase
         animal_array = Animal.all.select do |animal|
             if animal.common_name
-                animal.common_name.include?(input)
+                animal.common_name.include?(animal_input)
             end
         end
         animal_array.each {|animal| puts animal.common_name.capitalize}
@@ -142,6 +144,12 @@ class User < ActiveRecord::Base
         favoritize_after_search
     end
 
+    def name_search(input)
+        animal_input = input
+        animal = Animal.all.find_by(common_name: animal_input)
+        Favorite.find_or_create_by(user_id: self.id, animal_id: animal.id)   
+    end
+
     def favoritize_after_search
         puts "Would you like to add any of these animals to your favorites? (Y/N)"
         input=gets.strip.downcase
@@ -152,29 +160,27 @@ class User < ActiveRecord::Base
         end
     end
 
-    # def update_user
-    #     puts "Would you like to update your username, password, or display name?"
-    #     puts "------------------------------------------------------------------"
-    #     puts "If you would like to change your username, type 'username'"
-    #     puts "If you would like to change your password, type 'password'"
-    #     puts "If you would like to change display name, type 'display name'"
-    #     input = gets.strip.downcase
-    #     if input == "username"
-    #         puts "Please type in your new username:"
-    #         user_input = gets.strip
-    #           find_user = User.find_by(user_id: self.id)
-#               find_user.update(username: user_input)
-    #     elsif input == "password"
-    #         puts "Please type in your new password"
-            
-    #     end
-
-    # end
-
-    def name_search(input)
-        animal_input = input
-        animal = Animal.all.find_by(common_name: animal_input)
-        Favorite.find_or_create_by(user_id: self.id, animal_id: animal.id)   
+    def change_user_info
+        puts "Would you like to update your username, password, or display name?"
+        puts "------------------------------------------------------------------"
+        puts "If you would like to change your username, type 'username'"
+        puts "If you would like to change your password, type 'password'"
+        puts "If you would like to change your display name, type 'display name'"
+        puts "You can type 'exit' to return to the main screen."
+        input = gets.strip.downcase
+        if input == "username"
+            puts "Please type in your new username:"
+            name_input = gets.strip
+                self.update(username: name_input)
+        elsif input == "password"
+            puts "Please type in your new password:"
+            password_input = gets.strip
+                self.update(password: password_input)
+        elsif input == "display name"
+            puts "Please type in your new display name:"
+            display_input = gets.strip
+                self.update(display_name: display_input)
+        end
     end
 
 end
