@@ -65,3 +65,6 @@ def no_favorites
     puts "You currently do not have any favorites."
     puts "If you would like to add a new favorite animal, please type 'add' in the main menu."
 end
+
+
+#########TESTING##########
