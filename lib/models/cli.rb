@@ -10,14 +10,14 @@ class Cli
         elsif input == "login"
             user=User.login
             if user == false
-                puts "your username or password is incorrect"
+                puts "Your username or password is incorrect. Please type 'login' to try again or type 'signup' to signup."
                 startup
             end
             user 
         elsif input == "sign up" || input == "signup"
             user=User.sign_up
             if user==false
-                puts "username is already taken"
+                puts "Sorry! Username is already taken."
                 startup
             end 
             user
@@ -28,13 +28,15 @@ class Cli
     end
 
     def help
+        puts "                                     "
         puts "  I can accept the following commands"
         puts "- help      : displays this help message"
         puts "- list      : displays a list of all animals, ten at a time"
         puts "- favorites : displays your list of favorite animals"
         puts "- search    : search of new animals to add to your list"
+        puts "- update    : update your username, password or display name"
         puts "- exit      : exits this program"
-        puts "Those are the commands that are available"
+#        puts "Those are the commands that are available"
     end
 
     # def runtime
@@ -46,15 +48,15 @@ class Cli
     def turn(user)
         instructions
         input=gets.chomp.downcase
-        until input=="exit" do
+        until input== "exit" do
             #binding.pry
-            help if input=="help"
-            "test" if input=="test"
-            user.search if input=="search"
+            help if input== "help"
+            "test" if input== "test"
+            user.search if input== "search"
             user.list_animals if input== "list"
             user.see_favorites if input == "favorites"
             user.create_favorite if input == "add"
-            #"update" if input == "update" #update is updating user nickname, update username, update password
+            user.change_user_info if input == "update" #update is updating user nickname, update username, update password
             user.remove_animal if input == "delete"
             instructions
             input=gets.chomp.downcase
@@ -83,6 +85,7 @@ class Cli
     
     private 
     def instructions
+        puts "                         "
         puts "Please enter a command"
         puts "Please type 'help' if you would like a list of commands"
         puts "You can always type 'exit' to exit screen"

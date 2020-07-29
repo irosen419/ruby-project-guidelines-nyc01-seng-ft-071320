@@ -2,7 +2,7 @@ module Art
     module InstanceMethods
         def welcome
             puts "                                                "
-            puts "_______FAVORITE_ENDANGERED_ANIMALS______________" 
+            puts "__________FAVORITE_ENDANGERED_ANIMALS___________" 
             puts "                                                "
             puts "         _By: Jennifer Yoo,                     "
             puts "        / /         Ian Rosen,                  "
@@ -21,11 +21,12 @@ module Art
             puts "           .  \\ 'C/ |    |    |   |  |      ,  "
             puts "          \\),/ .. .'OOO-'. ..'OOO'OOO-'. ..\\(, "
             puts "________________________________________________" 
-            puts "________Please_SIGNUP_up_or_LOGIN_______________"
+            puts "____________Please_SIGNUP_or_LOGIN______________"
             puts "________________________________________________"
         end
 
         def goodbye
+            puts "                          "
             puts "We are sorry to see you go"
             puts "                     .    "
             puts "                    / V\\  "
@@ -38,7 +39,8 @@ module Art
             puts "          (      ) | |    "
             puts "  ________|   _/_  | |    "
             puts "<__________\\______)\\__)   "
-            puts "Please come back again!   "
+            puts "                           "
+            puts "  Please come back again!  "
         end
 
     end
