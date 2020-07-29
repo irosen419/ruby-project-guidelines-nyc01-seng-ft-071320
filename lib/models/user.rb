@@ -167,13 +167,7 @@ class User < ActiveRecord::Base
         category_array.each { |animal| puts animal.common_name.capitalize}
         puts "Would you like to look at the animals in a category?"
         favoritize_after_search
-    end
-
-    def name_search(input)
-        animal_input = input
-        animal = Animal.all.find_by(common_name: animal_input)
-        Favorite.find_or_create_by(user_id: self.id, animal_id: animal.id)   
-    end
+    end  
 
     def favoritize_after_search
         puts "Would you like to add any of these animals to your favorites? (Y/N)"
@@ -188,6 +182,12 @@ class User < ActiveRecord::Base
             end
             input=gets.strip.downcase if input!= "exit"
         end
+    end
+
+    def name_search(input)
+        animal_input = input
+        animal = Animal.all.find_by(common_name: animal_input)
+        Favorite.find_or_create_by(user_id: self.id, animal_id: animal.id)   
     end
     
     def change_user_info
