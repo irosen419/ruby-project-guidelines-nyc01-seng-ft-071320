@@ -2,7 +2,7 @@ module Art
     module InstanceMethods
 
         def welcome
-        puts"  DONATION NATION:  "
+        puts"\n\n  DONATION NATION:  "
         puts"     AUSTRALIA      "
         puts"          |   | //##"
         puts"    n___n |   |//   "
@@ -33,11 +33,10 @@ module Art
         end
 
         def instructions
-            puts "            ----- MAIN MENU -----   \n"
-            puts "      I can accept the following commands"
-            menu = ["donate    : exits this program","add       : add an animal to your favorites list","rankings  : view different animal rankings", "update    : make updates to user info", "logout    : logout of current account", "delete    : remove an animal from your favorites", "list      : displays a list of all animals, ten at a time", "favorites : displays your list of favorite animals", "search    : search of new animals to add to your list"].sort_by { |word| word.downcase } 
+            puts "            ----- MAIN MENU -----   \n\n      I can accept the following commands\n\n"
+            menu = ["donate    : exits this program","add       : add an animal to your favorites list","rankings  : view different animal rankings", "update    : make updates to user info", "logout    : logout of current account and go back to the welcome screen", "delete    : remove an animal from your favorites", "list      : displays a list of all animals, ten at a time", "favorites : displays your list of favorite animals", "search    : search of new animals to add to your list"].sort_by { |word| word.downcase } 
             menu.each_with_index {|item, index| puts "#{index + 1}. #{item}"}
-            puts "You may type 'exit' at any time."
+            puts "\nYou may type 'exit' at any time.\nTyping 'exit' will exit from our application from this menu.\n\n"
             convert_hash=menu.map{|x| x.split(" ")[0]}
             hash_menu=Hash[(1...convert_hash.size+1).zip convert_hash]
             input = gets.strip.downcase
@@ -48,8 +47,7 @@ module Art
             # binding.pry
             input
         end 
-        #trying to implement numbers with instructions 
-
+        
         def login_fail
             puts "Your username or password is incorrect.\nPlease type sign up, login, or browse"
         end
@@ -63,8 +61,7 @@ def top_instructions
 end
 
 def search_instructions
-    puts "                   ----- SEARCH MENU -----                             "
-    puts "If you would like to find a particular type of animal, type 'animal'. \n If you would like to search by category, type 'category'.\n You may type 'exit' at any time."
+    puts "                   ----- SEARCH MENU -----                             \nIf you would like to find a particular type of animal, type 'animal'. \n If you would like to search by category, type 'category'.\n You may type 'exit' at any time."
     gets.chomp.downcase
 end
 
@@ -77,8 +74,7 @@ def donation_instructions
     input = gets.strip.downcase
     hash_key=input.to_i
     input = hash_menu[hash_key] if hash_key.between?(1, 3) 
-    puts "Welcome to the Donation Page." 
-    puts "You may type 'exit' at any time.\n"
+    puts "Welcome to the Donation Page.\nIf you would like to search by category, type 'category'.\nYou may type 'exit' at any time."
     input
 end 
 # "charity   : to look "

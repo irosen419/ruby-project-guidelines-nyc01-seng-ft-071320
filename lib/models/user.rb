@@ -98,8 +98,8 @@ class User < ActiveRecord::Base
             end
             current += 10
             input = 'exit' if test_length.length < 10
-            puts "\n Type 'next' to see more animals," #'add' to add one of these to your favorites"
-            puts "or type 'exit' to exit.\n"
+            puts "\nType 'next' to see more animals,\nor type 'exit' to exit.\n" if test_length.length == 10
+            puts "\nYou have reached the end of the list. \nAny input will lead you back to the main screen\n" if test_length.length < 10
             input = gets.chomp.downcase if test_length.length >= 10
             #favoritize_after_search if input == "add"
         end

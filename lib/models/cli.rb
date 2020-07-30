@@ -4,14 +4,16 @@ class Cli
 
     def startup #change to launchpoint
         input= gets.strip.downcase
+        start_menu=["login","log in","sign up","signup","browse"]
         user = nil
         until input=="exit"do
             user=User.login if input == "login" || input == "log in"
             user=User.sign_up if input == "sign up" || input == "signup"
             user=User.default_user if input == "browse"
             input = turn(user) if user
-            welcome if input == "logout"
-            puts "Incorrect Input! You need to sign up or log in" if user==nil 
+            user=nil if input == "logout" || input == "log out"
+            welcome if input == "logout" || input == "log out"
+            puts "You are currently not logged in.\nYou need to sign up or log in\nOr just browse" if user==nil
             input=gets.strip.downcase if input != "exit"
         end
         goodbye
@@ -20,7 +22,7 @@ class Cli
 
     def turn(user) #main_menu
         input = ""
-        until input=="exit" || input== "logout" do  
+        until input=="exit" || input== "logout" || input== "log out" do  
             user.donation_page if input== "donate" # make this its own thing
             # "test" if input== "test" # we use this line to test new commands for menu
             user.remove_animal if input == "delete"
@@ -32,7 +34,7 @@ class Cli
             user.change_user_info if input == "update"
             input = instructions
         end 
-        input="exit" if input != "logout"
+        input="exit" if input != "logout" && input != "log out"
         input
     end
 #if you delete your account, you should be kicked out to the welcome screen
