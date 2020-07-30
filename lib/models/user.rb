@@ -223,7 +223,7 @@ class User < ActiveRecord::Base
             # charity if input =="charity" # find a charity
             list_charities if input == "list" #list a charity
             list_my_donations if input =="view" #look at your donations
-            # find_donation if input =="find" #find a donation
+            User.top_donors if input == "rankings" #view top donors and their donations
             input = donation_instructions
         end
         puts "Thank you for Donation or your Consideration.\nPlease consider donating to these poor animals again!\n"
