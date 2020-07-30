@@ -259,7 +259,6 @@ class User < ActiveRecord::Base
 
     def choose_animal
         list_animals
-        puts "Now please type the animal name: "
         input = gets.chomp.downcase
         Animal.all.find_by(common_name: input)
     end
@@ -275,16 +274,7 @@ class User < ActiveRecord::Base
             charity = Charity.find(charity_id)
             animal_id = donation.animal_id
             animal = Animal.find(animal_id)
-            if charity.acronym
-                puts "Charity name: #{charity.name.capitalize}(#{charity.acronym}), Donation amount: $#{donation.amount}, In honor of: #{animal.common_name.pluralize.capitalize}."
-            else
-                non_acronym_array << "Charity name: #{charity.name.capitalize}, Donation amount: $#{donation.amount}, In honor of: #{animal.common_name.pluralize.capitalize}."
-            end
+            puts "You donated $#{donation.amount} to #{charity.name}(#{charity.acronym}), in honor of #{animal.common_name.pluralize}."
         end
-        non_acronym_array.each {|charity_string| puts charity_string}
-    end
-
-    def my_top_donations
-        my_donations.max_by(5) {|donation| donation.amount}
     end
 end
