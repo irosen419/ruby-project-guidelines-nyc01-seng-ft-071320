@@ -178,7 +178,7 @@ class User < ActiveRecord::Base
     
     def change_user_info
         puts "    You can make the following changes to your account"
-        menu = ["top          : update your password","password     : update your password", "username     : update your username", "display name : update your display name", "exit         : return to the main menu"].sort_by { |word| word.downcase }    
+        menu = ["password     : update your password", "delete       : delete your account", "username     : update your username", "display name : update your display name", "exit         : return to the main menu"].sort_by { |word| word.downcase }    
         menu.each{|item|puts "- #{item}"}
         input = gets.strip.downcase
         if input == "username"
@@ -193,6 +193,13 @@ class User < ActiveRecord::Base
             puts "Please type in your new display name:"
             display_input = gets.strip
                 self.update(display_name: display_input)
+        elsif input == "delete"
+            puts "Are you sure you want to delete your account? If so, please type [Y]"
+            delete_input = gets.strip
+                if delete_input.downcase == "y"
+                    self.delete
+                    puts "Your account is deleted. You will still be able to browse our app as a Guest."
+                end
         end
     end
 
@@ -206,8 +213,20 @@ class User < ActiveRecord::Base
         Animal.top_five if input == "top"
     end
 
-    def make_a_donation
-
+    def my_donations
+        Donation.all.where(user_id: self.id)
     end
+
+    def find_donation
+        array_of_donations = []
+        self.my_donations.each do |donation|
+            Charity.all.each do |charity|
+                if charity.id == donation.charity_id
+                    puts "You donated $#{donation.amount} to #{charity.name}#{acrynom}, in honor of ____"
+                end
+            end
+        end
+    end
+
 
 end

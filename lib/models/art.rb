@@ -34,7 +34,7 @@ module Art
 
         def help
             puts "      I can accept the following commands"
-            menu = ["rankings  : view different animal rankings", "update    : make updates to user info", "logout    : logout of current account", "delete    : remove an animal from your favorites", "list      : displays a list of all animals, ten at a time", "favorites : displays your list of favorite animals", "search    : search of new animals to add to your list","exit      : exits this program"].sort_by { |word| word.downcase }
+            menu = ["rankings  : view different animal rankings", "update    : make updates to user info", "logout    : logout of current account", "delete    : remove an animal from your favorites", "view      : displays a list of all animals, ten at a time", "favorites : displays your list of favorite animals", "search    : search of new animals to add to your list", "exit      : exits this program"].sort_by { |word| word.downcase }
             menu.each_with_index {|item, index| puts "#{index + 1}. #{item}"}
 
             puts "\n"
