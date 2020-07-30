@@ -39,15 +39,12 @@ class Animal < ActiveRecord::Base
     def self.top_five
         aoa = id_occurence_in_favorites.sort_by{|k, v| -v}
         aoa = aoa.map {|array| array[0]}.map{|id| self.all.find(id)}[0...5]
-        
         counter = 1
-        # until counter == 6
-            aoa.each do |animal|
-                puts "#{counter}. #{animal.common_name.capitalize}: #{animal.category.capitalize}"
-                counter += 1
-                puts "\n\n" if count == 5
-            end
-        # end
+        aoa.each do |animal|
+            puts "#{counter}. #{animal.common_name.capitalize}: #{animal.category.capitalize}"
+            counter += 1
+            puts "\n\n" if count == 5
+        end
     end
 
     # def self.ascending_popularity
@@ -58,13 +55,11 @@ class Animal < ActiveRecord::Base
     def self.lonely_animals
         array = self.all.select {|animal| animal.favorites.length == 0}.sample(5)
         counter = 1
-       # until counter == 6
-            array.each do |animal|
-                puts "#{counter}. #{animal.common_name.capitalize}: #{animal.category.capitalize}"
-                counter += 1
-                puts "\n\n" if counter == 5
-            end
-       # end
+        array.each do |animal|
+            puts "#{counter}. #{animal.common_name.capitalize}: #{animal.category.capitalize}"
+            counter += 1
+            puts "\n\n" if counter == 5
+        end
     end
 
 end

@@ -30,13 +30,9 @@ require 'pry'
 # Favorite.create(user_id: User.all[0].id, animal_id: Animal.all[6].id)
 
 # https://apps.des.qld.gov.au/species/?op=getorganisations
-main_url = RestClient.get("https://apps.des.qld.gov.au/species/?op=getorganisations")
-charity_data = JSON.parse(main_url)
-
-
-charity_data["Organisation"].each do |charity_hash|
-    Charity.create(name: charity_hash["Name"], acronym: charity_hash["Acronym"], org_type: charity_hash["OrganisationType"])
-end
-
+# Animal.get_database_animals_gov_au
+# Charity.get_charity
+# Charity.create_donation
+Favorite.create_favs #creates users and favorites
 binding.pry
 puts "I pried into somewhere I shouldn't have"
