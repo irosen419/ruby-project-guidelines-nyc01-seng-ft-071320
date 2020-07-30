@@ -1,12 +1,6 @@
 class Charity < ActiveRecord::Base
     has_many :donations
     has_many :users, through: :donations
-<<<<<<< HEAD
-
-
-    
-end
-=======
     
     def self.get_charity
         main_url = RestClient.get("https://apps.des.qld.gov.au/species/?op=getorganisations")
@@ -17,6 +11,5 @@ end
     end 
     
 
->>>>>>> origin/master
 
 end

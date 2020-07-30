@@ -250,14 +250,13 @@ class User < ActiveRecord::Base
         Donation.all.where(user_id: self.id)
     end
 
-    def find_donation
-        array_of_donations = []
+    def list_my_donations
         self.my_donations.each do |donation|
-            Charity.all.each do |charity|
-                if charity.id == donation.charity_id
-                    puts "You donated $#{donation.amount} to #{charity.name}#{acrynom}, in honor of ____"
-                end
-            end
+            charity_id = donation.charity_id
+            charity = Charity.find(charity_id)
+            animal_id = donation.animal_id
+            animal = Animal.find(animal_id)
+            puts "You donated $#{donation.amount} to #{charity.name}(#{charity.acronym}), in honor of #{animal.common_name.pluralize}."
         end
     end
 end
