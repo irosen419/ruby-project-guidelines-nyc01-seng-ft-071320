@@ -94,3 +94,35 @@ Donation.create(amount: 30, memo: "For the animals", user_id: User.all.first.id,
 Donation.create(amount: 50, memo: "For the animals", user_id: User.all.first.id, charity_id: Charity.all.third.id, animal_id: Animal.all.third.id)
 Donation.create(amount: 100, memo: "For the animals", user_id: User.all.second.id, charity_id: Charity.all.fourth.id, animal_id: Animal.all.fourth.id)
 Donation.create(amount: 15, memo: "For the animals", user_id: User.all.last.id, charity_id: Charity.all.last.id, animal_id: Animal.all.last.id)
+
+
+  create_table "animals", force: :cascade do |t|
+    t.string "scientific_name"
+    t.string "common_name"
+    t.string "category"
+  end
+
+  create_table "charities", force: :cascade do |t|
+    t.string "name"
+    t.string "acronym"
+    t.string "org_type"
+  end
+
+  create_table "donations", force: :cascade do |t|
+    t.integer "amount"
+    t.string "memo"
+    t.integer "user_id"
+    t.integer "charity_id"
+    t.integer "animal_id"
+  end
+
+  create_table "favorites", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "animal_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "username"
+    t.string "password"
+    t.string "display_name"
+  end

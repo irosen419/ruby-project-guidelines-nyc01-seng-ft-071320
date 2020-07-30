@@ -166,7 +166,7 @@ class User < ActiveRecord::Base
         input=gets.chomp.downcase
         until input == "exit"
             search = name_search(input)
-            puts "\n You have added #{input.capitalize} to your favorites! (FS version)" if search != nil #FS version needs to be taken out if we still want this to be implemented
+            puts "\n You have added #{input.capitalize} to your favorites!" if search != nil #FS version needs to be taken out if we still want this to be implemented
             input = "exit"
         end
     end
@@ -175,7 +175,7 @@ class User < ActiveRecord::Base
         animal_input = input
         animal = Animal.all.find_by(common_name: animal_input)
         Favorite.find_or_create_by(user_id: self.id, animal_id: animal.id) if animal 
-        puts "\n You have added #{input.capitalize} to your favorites!\n (NS Version)" if animal #James added this line Thursday for the added animal feature. 
+        puts "\n You have added #{input.capitalize} to your favorites!\n" if animal #James added this line Thursday for the added animal feature. 
         puts "\n You might have mispelled that name. Please try again.\n" if !animal #Live above might be duplicated by favoritize, we might have to remove that line
     end
     
@@ -241,6 +241,9 @@ class User < ActiveRecord::Base
         puts"Finally, please denote an amount for the donation: "
         amount = gets.chomp
         Donation.create(amount: amount.to_i, memo: memo, user_id: self.id, charity_id: charity.id, animal_id: animal.id)
+        puts "Your donations are: "
+        list_my_donations
+        puts "\n\nYou have donated a total of $#{my_donation_total[:amount]}."
     end
 
     def choose_charity
