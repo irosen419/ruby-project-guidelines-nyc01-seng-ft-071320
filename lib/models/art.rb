@@ -32,22 +32,15 @@ module Art
              "   Please come back again!      "
         end
 
-        # def help #merging this with instructions
-        #     puts "      I can accept the following commands"
-        #     menu = ["add       : add an animal to your favorites list","rankings  : view different animal rankings", "update    : make updates to user info", "logout    : logout of current account", "delete    : remove an animal from your favorites", "list      : displays a list of all animals, ten at a time", "favorites : displays your list of favorite animals", "search    : search of new animals to add to your list","exit      : exits this program"].sort_by { |word| word.downcase } 
-        #     menu.each_with_index {|item, index| puts "#{index + 1}. #{item}"}
-        #     # "Please use type 'exit' to exit or go back" #if we add donate then we need to un-hash this line and add it to our list above. We also need to update our function in menu
-        #     puts "\n"
-        # end
-
         def instructions
             puts "            ----- MAIN MENU -----   \n"
             puts "      I can accept the following commands"
-            menu = ["add       : add an animal to your favorites list","rankings  : view different animal rankings", "update    : make updates to user info", "logout    : logout of current account", "delete    : remove an animal from your favorites", "list      : displays a list of all animals, ten at a time", "favorites : displays your list of favorite animals", "search    : search of new animals to add to your list","exit      : exits this program"].sort_by { |word| word.downcase } 
+            menu = ["donate    : exits this program","add       : add an animal to your favorites list","rankings  : view different animal rankings", "update    : make updates to user info", "logout    : logout of current account", "delete    : remove an animal from your favorites", "list      : displays a list of all animals, ten at a time", "favorites : displays your list of favorite animals", "search    : search of new animals to add to your list"].sort_by { |word| word.downcase } 
             menu.each_with_index {|item, index| puts "#{index + 1}. #{item}"}
+            puts "You may type 'exit' at any time."
             convert_hash=menu.map{|x| x.split(" ")[0]}
             hash_menu=Hash[(1...convert_hash.size+1).zip convert_hash]
-            input = gets.strip
+            input = gets.strip.downcase
             hash_key=input.to_i
             input = hash_menu[hash_key] if hash_key.between?(1, 9)            
             # "Please use type 'exit' to exit or go back" #if we add donate then we need to un-hash this line and add it to our list above. We also need to update our function in menu
@@ -58,26 +51,39 @@ module Art
         #trying to implement numbers with instructions 
 
         def login_fail
-            puts "Your username or password is incorrect"
-            puts "Please type sign up, login, or browse"
+            puts "Your username or password is incorrect.\nPlease type sign up, login, or browse"
         end
 
     end
 end
 
 def top_instructions
-    puts"Type 'top' to see the Top 5 most popular animals"
-    puts"Type 'sad' to see the Top 5 most sad animals"
+    puts"Type 'top' to see the Top 5 most popular animals.\nType 'sad' to see the Top 5 most sad animals"
     gets.chomp.downcase
 end
 
 def search_instructions
     puts "                   ----- SEARCH MENU -----                             "
-    puts "If you would like to find a particular type of animal, type 'animal'."
-    puts "If you would like to search by category, type 'category'."
-    puts "You may type 'exit' at any time."
+    puts "If you would like to find a particular type of animal, type 'animal'. \n If you would like to search by category, type 'category'.\n You may type 'exit' at any time."
     gets.chomp.downcase
 end
+
+def donation_instructions
+    puts "                   ----- Donation MENU -----                             "
+    donations_menu = ["donate    : donate to a charity of your choice","list      : look at the available charities","donations : review all your donations"].sort_by { |word| word.downcase } 
+    donations_menu.each_with_index {|item, index| puts "#{index + 1}. #{item}"}
+    convert_hash=donations_menu.map{|x| x.split(" ")[0]}
+    hash_menu=Hash[(1...convert_hash.size+1).zip convert_hash]
+    input = gets.strip.downcase
+    hash_key=input.to_i
+    input = hash_menu[hash_key] if hash_key.between?(1, 3) 
+    puts "Welcome to the Donation Page."
+    puts "If you would like to search by category, type 'category'." 
+    puts "You may type 'exit' at any time."
+    input
+end 
+# "charity   : to look "
+# "find      : find a particular "
 
 def no_favorites 
     puts "You currently do not have any favorites."
