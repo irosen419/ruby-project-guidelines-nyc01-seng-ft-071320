@@ -220,15 +220,9 @@ class User < ActiveRecord::Base
         Donation.create(amount: amount.to_i, memo: memo, user_id: self.id, charity_id: charity.id, animal_id: animal.id)
     end
 
-    def choose_animal
-        list_animals
-        input = gets.chomp.downcase
-        Animal.all.find_by(common_name: input)
-    end
-
     def choose_charity
         list_charities
-        input = gets.chomp
+        input = gets.chomp.downcase
         Charity.all.find_by(name: input)
     end
 
@@ -237,5 +231,12 @@ class User < ActiveRecord::Base
             puts char.name
         end
     end
+
+    def choose_animal
+        list_animals
+        input = gets.chomp.downcase
+        Animal.all.find_by(common_name: input)
+    end
+
 
 end
