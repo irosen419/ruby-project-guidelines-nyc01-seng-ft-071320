@@ -2,18 +2,18 @@ module Art
     module InstanceMethods
 
         def welcome
-        puts"  FAVORITE AUSSIE  "
-        puts"     ANIMALS       "
-        puts"          |   |//## "
+        puts"  DONATION NATION:  "
+        puts"     AUSTRALIA      "
+        puts"          |   | //##"
         puts"    n___n |   |//   "
         puts"  ._\\'O'/___   /   "
-        puts"  ['o']  ___: |    "
-        puts"  /  ,-': |_  |    "
-        puts"  \\_,./__,__: |   "
-        puts"          |   |    "
-        puts"          |   |    "
-        puts"SIGNUP OR LOGIN    "
-        puts"         OR BROWSE "
+        puts"  ['o']  ___: |     "
+        puts"  /  ,-': |_  |     "
+        puts"  \\_,./__,__: |    "
+        puts"          |   |     "
+        puts"          |   |     "
+        puts"SIGNUP OR LOGIN     "
+        puts"         OR BROWSE  "
         end
 
         def goodbye
@@ -70,24 +70,22 @@ end
 
 def donation_instructions
     puts "                   ----- Donation MENU -----                             "
-    donations_menu = ["donate    : donate to a charity of your choice","list      : look at the available charities","donations : review all your donations"].sort_by { |word| word.downcase } 
+    donations_menu = ["donate    : donate to a charity of your choice","list      : look at the available charities","view      : review all your donations"].sort_by { |word| word.downcase } 
     donations_menu.each_with_index {|item, index| puts "#{index + 1}. #{item}"}
     convert_hash=donations_menu.map{|x| x.split(" ")[0]}
     hash_menu=Hash[(1...convert_hash.size+1).zip convert_hash]
     input = gets.strip.downcase
     hash_key=input.to_i
     input = hash_menu[hash_key] if hash_key.between?(1, 3) 
-    puts "Welcome to the Donation Page."
-    puts "If you would like to search by category, type 'category'." 
-    puts "You may type 'exit' at any time."
+    puts "Welcome to the Donation Page." 
+    puts "You may type 'exit' at any time.\n"
     input
 end 
 # "charity   : to look "
 # "find      : find a particular "
 
 def no_favorites 
-    puts "You currently do not have any favorites."
-    puts "If you would like to add a new favorite animal, please type 'add' in the main menu."
+    puts "You currently do not have any favorites.\nIf you would like to add a new favorite animal, please type 'add' in the main menu.\n"
 end
 
 def names
@@ -98,8 +96,6 @@ end
 def message_board (array)
     puts ""
 end
-
-#########TESTING##########
 
 def logout_talk(user)                                                                  
     input ="logout"

@@ -11,11 +11,12 @@ class Cli
             user=User.default_user if input == "browse"
             input = turn(user) if user
             welcome if input == "logout"
-            puts "Incorrect Input! You need to sign up or log in" if user==nil
+            puts "Incorrect Input! You need to sign up or log in" if user==nil 
             input=gets.strip.downcase if input != "exit"
         end
         goodbye
     end
+#if we have time, we need to make sure other inputs gets a message
 
     def turn(user) #main_menu
         input = ""

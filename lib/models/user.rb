@@ -221,8 +221,8 @@ class User < ActiveRecord::Base
         until input == "exit" do
             make_a_donation if input == "donate" #to donate [donate,charity,list,donations,find]
             # charity if input =="charity" # find a charity
-            list if input == "list" #list a charity
-            my_donations if input =="donations" #look at your donations
+            list_charities if input == "list" #list a charity
+            list_my_donations if input =="view" #look at your donations
             # find_donation if input =="find" #find a donation
             input = donation_instructions
         end
@@ -271,7 +271,31 @@ class User < ActiveRecord::Base
             charity = Charity.find(charity_id)
             animal_id = donation.animal_id
             animal = Animal.find(animal_id)
-            puts "You donated $#{donation.amount} to #{charity.name}(#{charity.acronym}), in honor of #{animal.common_name.pluralize}."
+            if charity.acronym
+                puts "Charity name: #{charity.name.capitalize}(#{charity.acronym}), Donation amount: $#{donation.amount}, In honor of: #{animal.common_name.pluralize.capitalize}."
+            else
+                non_acronym_array << "Charity name: #{charity.name.capitalize}, Donation amount: $#{donation.amount}, In honor of: #{animal.common_name.pluralize.capitalize}."
+            end
+        end
+        non_acronym_array.each {|charity_string| puts charity_string}
+    end
+
+    def my_top_donations
+        my_donations.max_by(5) {|donation| donation.amount}
+    end
+
+    def my_donation_total
+        total = my_donations.sum {|donation| donation.amount}
+        self.display_name ? {name: self.display_name, amount: total} : {name: self.username, amount: total}
+    end
+
+    def self.top_donors
+        hashes = self.all.map {|user| user.my_donation_total}.max_by(5) {|key| key[:amount]}
+        counter = 1
+        hashes.each do |hash|
+            puts "#{counter}. #{hash[:name]}: $#{hash[:amount]}"
+            counter += 1
         end
     end
+
 end
