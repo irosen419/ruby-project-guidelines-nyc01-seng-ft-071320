@@ -35,7 +35,7 @@ class Cli
         input="exit" if input != "logout"
         input
     end
-
+#if you delete your account, you should be kicked out to the welcome screen
     def runtime
         welcome 
         startup
