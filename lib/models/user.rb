@@ -166,7 +166,7 @@ class User < ActiveRecord::Base
         input=gets.chomp.downcase
         until input == "exit"
             search = name_search(input)
-            puts "\n You have added #{input.capitalize} to your favorites!" if search != nil
+            puts "\n You have added #{input.capitalize} to your favorites! (FS version)" if search != nil #FS version needs to be taken out if we still want this to be implemented
             input = "exit"
         end
     end
@@ -174,8 +174,9 @@ class User < ActiveRecord::Base
     def name_search(input)
         animal_input = input
         animal = Animal.all.find_by(common_name: animal_input)
-        Favorite.find_or_create_by(user_id: self.id, animal_id: animal.id) if animal
-        puts "\n You might have mispelled that name. Please try again." if !animal
+        Favorite.find_or_create_by(user_id: self.id, animal_id: animal.id) if animal 
+        puts "\n You have added #{input.capitalize} to your favorites!\n (NS Version)" if animal #James added this line Thursday for the added animal feature. 
+        puts "\n You might have mispelled that name. Please try again.\n" if !animal #Live above might be duplicated by favoritize, we might have to remove that line
     end
     
     def change_user_info
@@ -259,6 +260,4 @@ class User < ActiveRecord::Base
             end
         end
     end
-
-
 end

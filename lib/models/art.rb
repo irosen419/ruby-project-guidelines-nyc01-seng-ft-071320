@@ -32,20 +32,30 @@ module Art
              "   Please come back again!      "
         end
 
-        def help
-            puts "      I can accept the following commands"
-            menu = ["rankings  : view different animal rankings", "update    : make updates to user info", "logout    : logout of current account", "delete    : remove an animal from your favorites", "view      : displays a list of all animals, ten at a time", "favorites : displays your list of favorite animals", "search    : search of new animals to add to your list", "exit      : exits this program"].sort_by { |word| word.downcase }
-            menu.each_with_index {|item, index| puts "#{index + 1}. #{item}"}
+        # def help #merging this with instructions
+        #     puts "      I can accept the following commands"
+        #     menu = ["add       : add an animal to your favorites list","rankings  : view different animal rankings", "update    : make updates to user info", "logout    : logout of current account", "delete    : remove an animal from your favorites", "list      : displays a list of all animals, ten at a time", "favorites : displays your list of favorite animals", "search    : search of new animals to add to your list","exit      : exits this program"].sort_by { |word| word.downcase } 
+        #     menu.each_with_index {|item, index| puts "#{index + 1}. #{item}"}
+        #     # "Please use type 'exit' to exit or go back" #if we add donate then we need to un-hash this line and add it to our list above. We also need to update our function in menu
+        #     puts "\n"
+        # end
 
-            puts "\n"
-        end
-        
         def instructions
-            puts "            ----- MAIN MENU -----   "
+            puts "            ----- MAIN MENU -----   \n"
+            puts "      I can accept the following commands"
+            menu = ["add       : add an animal to your favorites list","rankings  : view different animal rankings", "update    : make updates to user info", "logout    : logout of current account", "delete    : remove an animal from your favorites", "list      : displays a list of all animals, ten at a time", "favorites : displays your list of favorite animals", "search    : search of new animals to add to your list","exit      : exits this program"].sort_by { |word| word.downcase } 
+            menu.each_with_index {|item, index| puts "#{index + 1}. #{item}"}
+            convert_hash=menu.map{|x| x.split(" ")[0]}
+            hash_menu=Hash[(1...convert_hash.size+1).zip convert_hash]
+            input = gets.strip
+            hash_key=input.to_i
+            input = hash_menu[hash_key] if hash_key.between?(1, 9)            
+            # "Please use type 'exit' to exit or go back" #if we add donate then we need to un-hash this line and add it to our list above. We also need to update our function in menu
             puts "\n"
-            help
-            gets.chomp.downcase
+            # binding.pry
+            input
         end 
+        #trying to implement numbers with instructions 
 
         def login_fail
             puts "Your username or password is incorrect"
@@ -74,9 +84,26 @@ def no_favorites
     puts "If you would like to add a new favorite animal, please type 'add' in the main menu."
 end
 
+def names
+    names= "Tashawn Williams,Ian Grubb,James wu,Ian Rosen,Jennifer Yoo,Alex Beciana,Junko Tahara,Ryan Werner,Karan S. Chauhan,Se Min Lee,Jake lozano,Brian Lego,Devin Benson,Muhtasim Ferdous,Josh Allen,David Kirsch,Amit Deshpande,Jake Mills,Victor Scholz,Kevin Xie,Ryan Flynn,Vincent Yang,David Kim,Ward Price,Cody DeMartin,Ryan Locascio,Matthew Peters,Gregory A.S. Wright,Cody C,Mimi Ojserkis,Mineliegoma,Joseph Kofler,Samuel Lesser,Sawandi Wilson,Iuriseara,Jzavier Timm,Israel Canessa,Vladilen Napuri,Teddy Bradsher"
+    names =names.split(",")
+end
 
 def message_board (array)
     puts ""
 end
 
 #########TESTING##########
+
+def logout_talk(user)                                                                  
+    input ="logout"
+    puts"Would you like to save your favorites by creating a new account (Y/N)"
+    
+    user_input=gets.strip
+    input = "logout"                                         
+end
+#we need to implement a message when they logout using a browsing user that they will
+#need to create an account to save their favorites list. if they type create (should we 
+#let them use the update account function to upate their account information or should we 
+#just have them go through the signup process and transfer their favorites to the new 
+#account that they have created)

@@ -46,6 +46,9 @@ require 'pry'
 # Donation.create(amount: 100, memo: "For the animals", user_id: User.all.second.id, charity_id: Charity.all.fourth.id, animal_id: Animal.all.fourth.id)
 # Donation.create(amount: 15, memo: "For the animals", user_id: User.all.last.id, charity_id: Charity.all.last.id, animal_id: Animal.all.last.id)
 
-
-# binding.pry
+# Animal.get_database_animals_gov_au
+# Charity.get_charity
+# Charity.create_donation
+# Favorite.create_favs #creates users and favorites
+binding.pry
 puts "I pried into somewhere I shouldn't have"
