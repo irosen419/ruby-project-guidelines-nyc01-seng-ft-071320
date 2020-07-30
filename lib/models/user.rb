@@ -222,7 +222,7 @@ class User < ActiveRecord::Base
 
     def choose_charity
         list_charities
-        input = gets.chomp.downcase
+        input = gets.chomp #.downcase
         Charity.all.find_by(name: input)
     end
 
