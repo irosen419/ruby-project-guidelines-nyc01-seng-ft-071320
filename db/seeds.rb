@@ -5,6 +5,7 @@ require 'pry'
 # User.delete_all
 # Animal.delete_all
 # Favorite.delete_all
+# Donation.delete_all
 
 # Animal.get_database_animals_gov_au
 
@@ -30,13 +31,24 @@ require 'pry'
 # Favorite.create(user_id: User.all[0].id, animal_id: Animal.all[6].id)
 
 # https://apps.des.qld.gov.au/species/?op=getorganisations
-main_url = RestClient.get("https://apps.des.qld.gov.au/species/?op=getorganisations")
-charity_data = JSON.parse(main_url)
+# main_url = RestClient.get("https://apps.des.qld.gov.au/species/?op=getorganisations")
+# charity_data = JSON.parse(main_url)
 
 
-charity_data["Organisation"].each do |charity_hash|
-    Charity.create(name: charity_hash["Name"], acronym: charity_hash["Acronym"], org_type: charity_hash["OrganisationType"])
-end
+# charity_data["Organisation"].each do |charity_hash|
+#     Charity.create(name: charity_hash["Name"].downcase, acronym: charity_hash["Acronym"], org_type: charity_hash["OrganisationType"])
+# end
 
+
+# Donation.create(amount: 25, memo: "For the animals", user_id: User.all.first.id, charity_id: Charity.all.first.id, animal_id: Animal.all.first.id)
+# Donation.create(amount: 30, memo: "For the animals", user_id: User.all.first.id, charity_id: Charity.all.second.id, animal_id: Animal.all.second.id)
+# Donation.create(amount: 50, memo: "For the animals", user_id: User.all.first.id, charity_id: Charity.all.third.id, animal_id: Animal.all.third.id)
+# Donation.create(amount: 100, memo: "For the animals", user_id: User.all.second.id, charity_id: Charity.all.fourth.id, animal_id: Animal.all.fourth.id)
+# Donation.create(amount: 15, memo: "For the animals", user_id: User.all.last.id, charity_id: Charity.all.last.id, animal_id: Animal.all.last.id)
+
+# Animal.get_database_animals_gov_au
+# Charity.get_charity
+# Charity.create_donation
+# Favorite.create_favs #creates users and favorites
 binding.pry
 puts "I pried into somewhere I shouldn't have"
