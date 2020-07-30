@@ -216,6 +216,7 @@ class User < ActiveRecord::Base
         Animal.top_five if input == "top"
     end
 
+<<<<<<< HEAD
     def donation_page #making donation page
         input=""
         until input == "exit" do
@@ -230,6 +231,9 @@ class User < ActiveRecord::Base
     end
 
     def make_a_donation
+=======
+    def make_a_donation #donation
+>>>>>>> origin/jenns-branch
         puts "Please choose a charity to donate to: "
         charity = choose_charity
         puts "Please choose an animal to donate in honor of: "
@@ -247,7 +251,7 @@ class User < ActiveRecord::Base
         Charity.all.find_by(name: input)
     end
 
-    def list_charities
+    def list_charities #listing charities 
         Charity.all.each do |char|
             puts char.name
         end
@@ -255,6 +259,7 @@ class User < ActiveRecord::Base
 
     def choose_animal
         list_animals
+        puts "Now please type the animal name: "
         input = gets.chomp.downcase
         Animal.all.find_by(common_name: input)
     end
@@ -263,13 +268,23 @@ class User < ActiveRecord::Base
         Donation.all.where(user_id: self.id)
     end
 
-    def list_my_donations
+    def list_my_donations #review donations
+        non_acronym_array = []
         self.my_donations.each do |donation|
             charity_id = donation.charity_id
             charity = Charity.find(charity_id)
             animal_id = donation.animal_id
             animal = Animal.find(animal_id)
-            puts "You donated $#{donation.amount} to #{charity.name}(#{charity.acronym}), in honor of #{animal.common_name.pluralize}."
+            if charity.acronym
+                puts "Charity name: #{charity.name.capitalize}(#{charity.acronym}), Donation amount: $#{donation.amount}, In honor of: #{animal.common_name.pluralize.capitalize}."
+            else
+                non_acronym_array << "Charity name: #{charity.name.capitalize}, Donation amount: $#{donation.amount}, In honor of: #{animal.common_name.pluralize.capitalize}."
+            end
         end
+        non_acronym_array.each {|charity_string| puts charity_string}
+    end
+
+    def my_top_donations
+        my_donations.max_by(5) {|donation| donation.amount}
     end
 end
