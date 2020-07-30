@@ -33,10 +33,10 @@ module Art
         end
 
         def instructions
-            puts "            ----- MAIN MENU -----   \n\n      I can accept the following commands\n\n"
-            menu = ["donate    : exits this program","add       : add an animal to your favorites list","rankings  : view different animal rankings", "update    : make updates to user info", "logout    : logout of current account and go back to the welcome screen", "delete    : remove an animal from your favorites", "list      : displays a list of all animals, ten at a time", "favorites : displays your list of favorite animals", "search    : search of new animals to add to your list"].sort_by { |word| word.downcase } 
+            puts "            ----- MAIN MENU -----   \n      I can accept the following commands\n"
+            menu = ["donate    : go to the donation menu","add       : add an animal to your favorites list","rankings  : view different animal rankings", "update    : make updates to user info", "logout    : logout of current account and go back to the welcome screen", "delete    : remove an animal from your favorites", "list      : displays a list of all animals, ten at a time", "favorites : displays your list of favorite animals", "search    : search of new animals to add to your list"].sort_by { |word| word.downcase } 
             menu.each_with_index {|item, index| puts "#{index + 1}. #{item}"}
-            puts "\nYou may type 'exit' at any time.\nTyping 'exit' will exit from our application from this menu.\n\n"
+            puts "You may type 'exit' at any time."
             convert_hash=menu.map{|x| x.split(" ")[0]}
             hash_menu=Hash[(1...convert_hash.size+1).zip convert_hash]
             input = gets.strip.downcase
@@ -66,19 +66,17 @@ def search_instructions
 end
 
 def donation_instructions
-    puts "                   ----- Donation MENU -----                             "
-    donations_menu = ["donate    : donate to a charity of your choice","list      : look at the available charities","view      : review all your donations"].sort_by { |word| word.downcase } 
+    puts "\n\n                   ----- DONATION MENU -----                             "
+    donations_menu = ["rankings  : view top donors","donate    : donate to a charity of your choice","list      : look at the available charities","view      : review all your donations"].sort_by { |word| word.downcase } 
     donations_menu.each_with_index {|item, index| puts "#{index + 1}. #{item}"}
     convert_hash=donations_menu.map{|x| x.split(" ")[0]}
     hash_menu=Hash[(1...convert_hash.size+1).zip convert_hash]
     input = gets.strip.downcase
     hash_key=input.to_i
-    input = hash_menu[hash_key] if hash_key.between?(1, 3) 
-    puts "Welcome to the Donation Page.\nIf you would like to search by category, type 'category'.\nYou may type 'exit' at any time."
+    input = hash_menu[hash_key] if hash_key.between?(1, donations_menu.count) 
+    puts "Welcome to the Donation Page.\nYou may type 'exit' at any time."
     input
 end 
-# "charity   : to look "
-# "find      : find a particular "
 
 def no_favorites 
     puts "You currently do not have any favorites.\nIf you would like to add a new favorite animal, please type 'add' in the main menu.\n"
@@ -87,10 +85,6 @@ end
 def names
     names= "Tashawn Williams,Ian Grubb,James wu,Ian Rosen,Jennifer Yoo,Alex Beciana,Junko Tahara,Ryan Werner,Karan S. Chauhan,Se Min Lee,Jake lozano,Brian Lego,Devin Benson,Muhtasim Ferdous,Josh Allen,David Kirsch,Amit Deshpande,Jake Mills,Victor Scholz,Kevin Xie,Ryan Flynn,Vincent Yang,David Kim,Ward Price,Cody DeMartin,Ryan Locascio,Matthew Peters,Gregory A.S. Wright,Cody C,Mimi Ojserkis,Mineliegoma,Joseph Kofler,Samuel Lesser,Sawandi Wilson,Iuriseara,Jzavier Timm,Israel Canessa,Vladilen Napuri,Teddy Bradsher"
     names =names.split(",")
-end
-
-def message_board (array)
-    puts ""
 end
 
 def logout_talk(user)                                                                  

@@ -67,7 +67,7 @@ class User < ActiveRecord::Base
             array_of_favs = []
             self.my_favorites.each do |favorite|
                 Animal.all.each do |animal|
-                    if animal.id == favorite.animal_id
+                if animal.id == favorite.animal_id
                         array_of_favs << "#{count}. #{animal.common_name.capitalize} | Scientific name: #{animal.scientific_name.capitalize} | Conservation status: #{animal.category.capitalize}.\n\n"
                         count += 1
                     end  
@@ -202,8 +202,10 @@ class User < ActiveRecord::Base
                 if delete_input.downcase == "y"
                     self.delete
                     puts "Your account is deleted. You will still be able to browse our app as a Guest."
+                    input = "logout"
                 end
         end
+        input
     end
 
     def self.default_user
@@ -223,7 +225,7 @@ class User < ActiveRecord::Base
             # charity if input =="charity" # find a charity
             list_charities if input == "list" #list a charity
             list_my_donations if input =="view" #look at your donations
-            User.top_donors if input == "rankings" #view top donors and their donations
+            top_donors if input == "rankings" #view top donors and their donations
             input = donation_instructions
         end
         puts "Thank you for Donation or your Consideration.\nPlease consider donating to these poor animals again!\n"
@@ -243,13 +245,13 @@ class User < ActiveRecord::Base
 
     def choose_charity
         list_charities
-        input = gets.chomp #.downcase
+        input = gets.chomp.downcase
         Charity.all.find_by(name: input)
     end
 
     def list_charities #listing charities 
         Charity.all.each do |char|
-            puts char.name
+            puts char.name.capitalize
         end
     end
 
@@ -266,18 +268,22 @@ class User < ActiveRecord::Base
 
     def list_my_donations #review donations
         non_acronym_array = []
-        self.my_donations.each do |donation|
-            charity_id = donation.charity_id
-            charity = Charity.find(charity_id)
-            animal_id = donation.animal_id
-            animal = Animal.find(animal_id)
-            if charity.acronym
-                puts "Charity name: #{charity.name.capitalize}(#{charity.acronym}), Donation amount: $#{donation.amount}, In honor of: #{animal.common_name.pluralize.capitalize}."
-            else
-                non_acronym_array << "Charity name: #{charity.name.capitalize}, Donation amount: $#{donation.amount}, In honor of: #{animal.common_name.pluralize.capitalize}."
+        if self.my_donations.length == 0 || self.my_donations == nil
+            puts "\n\n You have not made any donations. You should get on that!"
+        else
+            self.my_donations.each do |donation|
+                charity_id = donation.charity_id
+                charity = Charity.find(charity_id)
+                animal_id = donation.animal_id
+                animal = Animal.find(animal_id)
+                if charity.acronym
+                    puts "Charity name: #{charity.name.capitalize}(#{charity.acronym}), Donation amount: $#{donation.amount}, In honor of: #{animal.common_name.pluralize.capitalize}."
+                else
+                    non_acronym_array << "Charity name: #{charity.name.capitalize}, Donation amount: $#{donation.amount}, In honor of: #{animal.common_name.pluralize.capitalize}."
+                end
             end
+            non_acronym_array.each {|charity_string| puts charity_string}
         end
-        non_acronym_array.each {|charity_string| puts charity_string}
     end
 
     def my_top_donations
@@ -289,8 +295,8 @@ class User < ActiveRecord::Base
         self.display_name ? {name: self.display_name, amount: total} : {name: self.username, amount: total}
     end
 
-    def self.top_donors
-        hashes = self.all.map {|user| user.my_donation_total}.max_by(5) {|key| key[:amount]}
+    def top_donors
+        hashes = User.all.map {|user| user.my_donation_total}.max_by(5) {|key| key[:amount]}
         counter = 1
         hashes.each do |hash|
             puts "#{counter}. #{hash[:name]}: $#{hash[:amount]}"

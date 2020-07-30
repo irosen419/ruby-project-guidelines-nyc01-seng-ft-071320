@@ -31,8 +31,8 @@ class Cli
             user.list_animals if input== "list"
             user.see_favorites if input == "favorites"
             user.create_favorite if input == "add"
-            user.change_user_info if input == "update"
-            input = instructions
+            input=user.change_user_info if input == "update"
+            input = instructions if input!= "exit" && input!="logout"
         end 
         input="exit" if input != "logout" && input != "log out"
         input

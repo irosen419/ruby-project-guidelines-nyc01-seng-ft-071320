@@ -11,5 +11,5 @@ p cli.runtime
 # p hash_menu[hash_key] if hash_key.between?(1, 9)
 
 # test=""
-binding.pry
-puts "what? What? is two questions."
+#binding.pry
+#puts "what? What? is two questions."
