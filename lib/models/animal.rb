@@ -1,5 +1,6 @@
 require 'pry'
 class Animal < ActiveRecord::Base
+    belongs_to :donation
     has_many :favorites
     has_many :users, through: :favorites
 

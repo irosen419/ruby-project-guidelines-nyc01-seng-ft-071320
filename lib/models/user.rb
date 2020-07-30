@@ -98,8 +98,10 @@ class User < ActiveRecord::Base
             end
             current += 10
             input = 'exit' if test_length.length < 10
-            puts "\n Type 'next' to see more animals or type 'exit' to exit."
+            puts "\n Type 'next' to see more animals," #'add' to add one of these to your favorites"
+            puts "or type 'exit' to exit.\n"
             input = gets.chomp.downcase if test_length.length >= 10
+            #favoritize_after_search if input == "add"
         end
         input
     end
@@ -207,7 +209,33 @@ class User < ActiveRecord::Base
     end
 
     def make_a_donation
+        puts "Please choose a charity to donate to: "
+        charity = choose_charity
+        puts "Please choose an animal to donate in honor of: "
+        animal = choose_animal
+        puts "Please write a memo to describe your donation: "
+        memo = gets.chomp
+        puts"Finally, please denote an amount for the donation: "
+        amount = gets.chomp
+        Donation.create(amount: amount.to_i, memo: memo, user_id: self.id, charity_id: charity.id, animal_id: animal.id)
+    end
 
+    def choose_animal
+        list_animals
+        input = gets.chomp.downcase
+        Animal.all.find_by(common_name: input)
+    end
+
+    def choose_charity
+        list_charities
+        input = gets.chomp
+        Charity.all.find_by(name: input)
+    end
+
+    def list_charities
+        Charity.all.each do |char|
+            puts char.name
+        end
     end
 
 end

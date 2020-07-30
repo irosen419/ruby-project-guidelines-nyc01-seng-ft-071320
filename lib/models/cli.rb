@@ -20,7 +20,7 @@ class Cli
     def turn(user) #main_menu
         input = ""
         until input=="exit" || input== "logout" do  
-            "test" if input== "test"
+            user.make_a_donation if input== "test"
             user.search if input== "search"
             user.top if input=="rankings"
             user.list_animals if input== "list"
