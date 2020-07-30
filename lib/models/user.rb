@@ -216,7 +216,6 @@ class User < ActiveRecord::Base
         Animal.top_five if input == "top"
     end
 
-<<<<<<< HEAD
     def donation_page #making donation page
         input=""
         until input == "exit" do
@@ -230,10 +229,7 @@ class User < ActiveRecord::Base
         puts "Thank you for Donation or your Consideration.\nPlease consider donating to these poor animals again!\n"
     end
 
-    def make_a_donation
-=======
     def make_a_donation #donation
->>>>>>> origin/jenns-branch
         puts "Please choose a charity to donate to: "
         charity = choose_charity
         puts "Please choose an animal to donate in honor of: "
@@ -259,6 +255,7 @@ class User < ActiveRecord::Base
 
     def choose_animal
         list_animals
+        puts "Now please enter the animal name: "
         input = gets.chomp.downcase
         Animal.all.find_by(common_name: input)
     end
