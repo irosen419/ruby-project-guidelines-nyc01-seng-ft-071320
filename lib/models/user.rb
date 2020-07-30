@@ -224,6 +224,7 @@ class User < ActiveRecord::Base
             list if input == "list" #list a charity
             my_donations if input =="donations" #look at your donations
             # find_donation if input =="find" #find a donation
+            
             input = donation_instructions
         end
         puts "Thank you for Donation or your Consideration.\nPlease consider donating to these poor animals again!\n"
