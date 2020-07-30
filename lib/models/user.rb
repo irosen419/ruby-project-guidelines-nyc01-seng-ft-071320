@@ -216,6 +216,19 @@ class User < ActiveRecord::Base
         Animal.top_five if input == "top"
     end
 
+    def donation_page #making donation page
+        input=""
+        until input == "exit" do
+            make_a_donation if input == "donate" #to donate [donate,charity,list,donations,find]
+            # charity if input =="charity" # find a charity
+            list if input == "list" #list a charity
+            my_donations if input =="donations" #look at your donations
+            # find_donation if input =="find" #find a donation
+            input = donation_instructions
+        end
+        puts "Thank you for Donation or your Consideration.\nPlease consider donating to these poor animals again!\n"
+    end
+
     def make_a_donation
         puts "Please choose a charity to donate to: "
         charity = choose_charity
