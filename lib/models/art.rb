@@ -69,12 +69,12 @@ def donation_instructions
     puts "\n\n                   ----- DONATION MENU -----                             "
     donations_menu = ["rankings  : view top donors","donate    : donate to a charity of your choice","list      : look at the available charities","view      : review all your donations"].sort_by { |word| word.downcase } 
     donations_menu.each_with_index {|item, index| puts "#{index + 1}. #{item}"}
+    puts "Welcome to the Donation Page.\nYou may type 'exit' at any time."
     convert_hash=donations_menu.map{|x| x.split(" ")[0]}
     hash_menu=Hash[(1...convert_hash.size+1).zip convert_hash]
     input = gets.strip.downcase
     hash_key=input.to_i
     input = hash_menu[hash_key] if hash_key.between?(1, donations_menu.count) 
-    puts "Welcome to the Donation Page.\nYou may type 'exit' at any time."
     input
 end 
 
