@@ -99,7 +99,7 @@ class User < ActiveRecord::Base
             current += 10
             input = 'exit' if test_length.length < 10
             puts "\nType 'next' to see more animals,\nor type 'exit' to exit.\n" if test_length.length == 10
-            puts "\nYou have reached the end of the list. \nAny input will lead you back to the main screen\n" if test_length.length < 10
+            puts "\nYou have reached the end of the list. \nAny input will lead you back to the main screen\n" if test_length.length < 10 
             input = gets.chomp.downcase if test_length.length >= 10
             #favoritize_after_search if input == "add"
         end
@@ -228,7 +228,7 @@ class User < ActiveRecord::Base
             display_input = gets.strip
                 self.update(display_name: display_input)
         elsif input == "delete"
-            puts "Are you sure you want to delete your account? If so, please type [Y]"
+            puts "Are you sure you want to delete your account? If so, please type [Y]. You can enter any key to return to the main menu."
             delete_input = gets.strip
                 if delete_input.downcase == "y"
                     self.delete
@@ -315,7 +315,7 @@ class User < ActiveRecord::Base
                 animal_id = donation.animal_id
                 animal = Animal.find(animal_id)
                 if charity.acronym
-                    puts "Charity name: #{charity.name.capitalize}(#{charity.acronym}), Donation amount: $#{donation.amount}, In honor of: #{animal.common_name.pluralize.capitalize}."
+                    puts "\n Charity name: #{charity.name.capitalize}(#{charity.acronym}), Donation amount: $#{donation.amount}, In honor of: #{animal.common_name.pluralize.capitalize}."
                 else
                     non_acronym_array << "Charity name: #{charity.name.capitalize}, Donation amount: $#{donation.amount}, In honor of: #{animal.common_name.pluralize.capitalize}."
                 end
