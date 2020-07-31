@@ -9,7 +9,5 @@ class Charity < ActiveRecord::Base
             Charity.create(name: charity_hash["Name"].downcase, acronym: charity_hash["Acronym"], org_type: charity_hash["OrganisationType"])
         end
     end 
-    
-
 
 end

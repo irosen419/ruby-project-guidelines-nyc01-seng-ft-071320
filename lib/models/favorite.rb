@@ -20,7 +20,4 @@ class Favorite < ActiveRecord::Base
         end
     end
 
-    # User.create(username: "Brian", password: 1234, display_name: "Lego")
-    # Favorite.create(user_id: User.all[0].id, animal_id: Animal.all[0].id)
-
 end

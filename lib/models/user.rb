@@ -197,7 +197,6 @@ class User < ActiveRecord::Base
             list_charities if input == "list" #list a charity
             list_my_donations if input =="view" #look at your donations
             top_donors if input == "rankings" #view top donors and their donations
-            list if input == "list" #list a charity
             my_donations if input =="donations" #look at your donations
             # find_donation if input =="find" #find a donation
             

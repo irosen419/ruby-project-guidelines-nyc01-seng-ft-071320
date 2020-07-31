@@ -51,11 +51,6 @@ class Animal < ActiveRecord::Base
         input=gets.strip.downcase
     end
 
-    # def self.ascending_popularity
-    #     aoa = id_occurence_in_favorites.sort_by{|k, v| v}
-    #     aoa.map {|array| array[0]}.map{|id| self.all.find(id)}[0...5]
-    # end
-
     def self.lonely_animals
         array = self.all.select {|animal| animal.favorites.length == 0}
         num= array.count
