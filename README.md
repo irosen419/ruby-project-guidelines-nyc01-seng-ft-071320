@@ -4,15 +4,16 @@
 Our app aims to raise awareness on threatened species in Australia. Users are able to interact with various animals and charities. Users will be able to search animals via species or threatened category and add them to their own ‘favorite’ list. Users are also able to search charities to make a donation in honor of a specific animal. 
 
 # Install Instructions
-1) Migrate all tables by typing in 'rake db:migrate' into your terminal
-2) Run seed database file by typing in 'rake db:seed' to get all animal and charity data.
+1) Run 'bundle install'
+2) Migrate all tables by typing in 'rake db:migrate' into your terminal
+3) Run seed database file by typing in 'rake db:seed' to get all animal and charity data.
         a) Animal.get_database_animals_gov_au - this seeds all animals from the QLD Wildlife API
         b) Charity.get_charity - this seeds all the charities from the QLD Wildlife API
         c) Donation.create_donations - this seeds numerous placeholder donations
         d) Favorite.create_favs - this seeds numerous placeholder favorites
-3) Alright! All the data is loaded. Please run the run file by typing in 'ruby bin/run.rb'
-4) Please interact with the application using the command line.
-5) Follow application instructions and have fun!
+4) Alright! All the data is loaded. Please run the run file by typing in 'ruby bin/run.rb'
+5) Please interact with the application using the command line.
+6) Follow application instructions and have fun!
 
 # Contributor’s Guideline
 1) Sign up or log in (will need a correct password) or browse as a Guest.
