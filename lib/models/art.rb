@@ -17,7 +17,7 @@ module Art
         end
 
         def goodbye
-        puts "   We are sorry to see you go!  "
+        puts "\n\n  We are sorry to see you go!  "
         puts "     Art by Joan G. Stark       "
         puts "            |\\._                "
         puts "            |  o o__             "
@@ -29,11 +29,11 @@ module Art
         puts "       \\  ;    ) / )           "
         puts "       `\\|   /__/ /__          "
         puts "     jgs `\\______)___)         "
-             "   Please come back again!      "
+        puts "   Please come back again!      "
         end
 
         def instructions
-            puts "            ----- MAIN MENU -----   \n      I can accept the following commands\n"
+            puts "\n            ----- MAIN MENU -----   \n      I can accept the following commands\n"
             menu = ["donate    : go to the donation menu","add       : add an animal to your favorites list","rankings  : view different animal rankings", "update    : make updates to user info", "logout    : logout of current account and go back to the welcome screen", "delete    : remove an animal from your favorites", "list      : displays a list of all animals, ten at a time", "favorites : displays your list of favorite animals", "search    : search of new animals to add to your list"].sort_by { |word| word.downcase } 
             menu.each_with_index {|item, index| puts "#{index + 1}. #{item}"}
             puts "You may type 'exit' at any time."
@@ -55,12 +55,16 @@ end
 
 def top_instructions
     puts"Type 'top' to see the Top 5 most popular animals.\nType 'sad' to see 5 lonely animals who have not yet been favorited."
-    gets.chomp.downcase
+    input = gets.chomp.downcase
+    sleep(0.75)
+    input
 end
 
 def search_instructions
     puts "                   ----- SEARCH MENU -----                             \nIf you would like to find a particular type of animal, type 'animal'. \n If you would like to search by category, type 'category'.\n You may type 'exit' at any time."
-    gets.chomp.downcase
+    input = gets.chomp.downcase
+    sleep(0.75)
+    input
 end
 
 def donation_instructions
@@ -71,21 +75,22 @@ def donation_instructions
     convert_hash=donations_menu.map{|x| x.split(" ")[0]}
     hash_menu=Hash[(1...convert_hash.size+1).zip convert_hash]
     input = gets.strip.downcase
+    sleep(0.75)
     hash_key=input.to_i
     input = hash_menu[hash_key] if hash_key.between?(1, donations_menu.count) 
     input
 end 
 
 def names
-    names= "Tashawn Williams,Ian Grubb,James wu,Ian Rosen,Jennifer Yoo,Alex Beciana,Junko Tahara,Ryan Werner,Karan S. Chauhan,Se Min Lee,Jake lozano,Brian Lego,Devin Benson,Muhtasim Ferdous,Josh Allen,David Kirsch,Amit Deshpande,Jake Mills,Victor Scholz,Kevin Xie,Ryan Flynn,Vincent Yang,David Kim,Ward Price,Cody DeMartin,Ryan Locascio,Matthew Peters,Gregory A.S. Wright,Cody C,Mimi Ojserkis,Mineliegoma,Joseph Kofler,Samuel Lesser,Sawandi Wilson,Iuriseara,Jzavier Timm,Israel Canessa,Vladilen Napuri,Teddy Bradsher"
+    names= "Tashawn,IanG,James,IanR,Jennifer,Alex,Junko,RyanW,Karan,SeMin,JakeL,Brian,Devin,Muhtasim,Josh,DavidKir,Amit,JakeM,Victor,Kevin,RyanF,Vincent,DavidK,Ward,Codyd,RyanL,Matthew,Gregory,Codyc,Mimi,Minelie,Joseph,Samuel,Sawandi,Iuri,Jzavier,Israel,Vlad,Teddy"
     names =names.split(",")
 end
 
 def logout_talk(user)                                                                  
     input ="logout"
     puts"Would you like to save your favorites by creating a new account (Y/N)"
-    
     user_input=gets.strip
+    sleep(0.75)
     input = "logout"                                         
 end
 #we need to implement a message when they logout using a browsing user that they will

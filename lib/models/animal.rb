@@ -20,7 +20,7 @@ class Animal < ActiveRecord::Base
                 url = animal_hash["SpeciesUrl"]
                 response = RestClient.get(url)
                 data = JSON.parse(response)
-                data["Species"].each do |indiv_animal| #ScientificName
+                data["Species"].each do |indiv_animal| 
                     if indiv_animal["AcceptedCommonName"]
                         if indiv_animal["ConservationStatus"]["ConservationSignificant"] == true && indiv_animal["ConservationStatus"]["EPBCStatus"]
                             Animal.create(scientific_name: indiv_animal["ScientificName"].downcase, common_name: indiv_animal["AcceptedCommonName"].downcase, category: indiv_animal["ConservationStatus"]["EPBCStatus"].downcase)
@@ -49,6 +49,8 @@ class Animal < ActiveRecord::Base
         end
         puts "Type 'any' key to leave these five adorable animals"
         input=gets.strip.downcase
+        sleep(0.75)
+        input
     end
 
     def self.lonely_animals
@@ -64,6 +66,8 @@ class Animal < ActiveRecord::Base
         end
         puts "Type 'any' key to leave these sad animals to cry. They just wanted to be wanted.\nDon't everyone deserved to be loved sometimes. Please find and friend them."
         input=gets.strip.downcase
+        sleep(0.75)
+        input
     end
 
 end

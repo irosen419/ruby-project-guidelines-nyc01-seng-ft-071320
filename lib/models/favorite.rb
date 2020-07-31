@@ -3,7 +3,6 @@ class Favorite < ActiveRecord::Base
     belongs_to :user
 
     include Art::InstanceMethods
-    # self.create_donation
 
     def self.create_favs
         names
