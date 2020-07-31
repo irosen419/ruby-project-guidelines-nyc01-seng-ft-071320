@@ -42,9 +42,7 @@ module Art
             input = gets.strip.downcase
             hash_key=input.to_i
             input = hash_menu[hash_key] if hash_key.between?(1, 9)            
-            # "Please use type 'exit' to exit or go back" #if we add donate then we need to un-hash this line and add it to our list above. We also need to update our function in menu
             puts "\n"
-            # binding.pry
             input
         end 
         
@@ -56,7 +54,7 @@ module Art
 end
 
 def top_instructions
-    puts"Type 'top' to see the Top 5 most popular animals.\nType 'sad' to see the Top 5 most sad animals"
+    puts"Type 'top' to see the Top 5 most popular animals.\nType 'sad' to see 5 lonely animals who have not yet been favorited."
     gets.chomp.downcase
 end
 

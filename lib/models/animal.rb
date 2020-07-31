@@ -59,7 +59,7 @@ class Animal < ActiveRecord::Base
     def self.lonely_animals
         array = self.all.select {|animal| animal.favorites.length == 0}
         num= array.count
-        puts "\nThere are still #{num} of animals that is not on anyone's favorite list.\nFive of these very lonely animals are looking for a kind soul to love them.\nAre you a kind soul?\n"
+        puts "\nThere are still #{num} animals that are not on anyone's favorite list.\nFive of these very lonely animals are looking for a kind soul to love them.\nAre you a kind soul?\n"
         array= array.sample(5)
         counter = 1
         array.each do |animal|

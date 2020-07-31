@@ -27,7 +27,7 @@ class Cli
             user=user
             user.donation_page if input== "donate" # make this its own thing
             # "test" if input== "test" # we use this line to test new commands for menu
-            input = user.remove_animal if input == "delete"
+            user.remove_animal if input == "delete"
             user.search if input== "search"
             user.top if input=="rankings"
             user.list_animals if input== "list"
@@ -55,7 +55,7 @@ class Cli
             puts "You need to signup, login, or browse to access our animals!" if password != user.password 
             user = false if password != user.password #if user signs in correctly, then user is used in CLI APP. 
         end
-        user #user is either, a user, a false statement, or nil
+        user #user is either a user, a false statement, or nil
     end
 
     def sign_up

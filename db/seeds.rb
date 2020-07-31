@@ -19,5 +19,5 @@ Charity.get_charity
 Favorite.create_favs #creates users and favorites
 Donation.create_donations
 
-binding.pry
+#binding.pry
 puts "I pried into somewhere I shouldn't have..."
