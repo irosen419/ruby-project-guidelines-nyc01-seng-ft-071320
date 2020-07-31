@@ -41,11 +41,14 @@ class Animal < ActiveRecord::Base
         aoa = id_occurence_in_favorites.sort_by{|k, v| -v}
         aoa = aoa.map {|array| array[0]}.map{|id| self.all.find(id)}[0...5]
         counter = 1
+        puts "\nThe following five animals are very loved by our visitors.\nThey believe all animals should be loved.\nDont't you want to love them and love other animals too?!\n"
         aoa.each do |animal|
             puts "#{counter}. #{animal.common_name.capitalize}: #{animal.category.capitalize}"
             counter += 1
             puts "\n\n" if count == 5
         end
+        puts "Type 'any' key to leave these five adorable animals"
+        input=gets.strip.downcase
     end
 
     # def self.ascending_popularity
@@ -54,13 +57,18 @@ class Animal < ActiveRecord::Base
     # end
 
     def self.lonely_animals
-        array = self.all.select {|animal| animal.favorites.length == 0}.sample(5)
+        array = self.all.select {|animal| animal.favorites.length == 0}
+        num= array.count
+        puts "\nThere are still #{num} of animals that is not on anyone's favorite list.\nFive of these very lonely animals are looking for a kind soul to love them.\nAre you a kind soul?\n"
+        array= array.sample(5)
         counter = 1
         array.each do |animal|
             puts "#{counter}. #{animal.common_name.capitalize}: #{animal.category.capitalize}"
             counter += 1
-            puts "\n\n" if counter == 5
+            puts "\n\n" if counter == 6
         end
+        puts "Type 'any' key to leave these sad animals to cry. They just wanted to be wanted.\nDon't everyone deserved to be loved sometimes. Please find and friend them."
+        input=gets.strip.downcase
     end
 
 end

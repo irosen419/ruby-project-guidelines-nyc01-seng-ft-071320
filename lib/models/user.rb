@@ -6,51 +6,51 @@ class User < ActiveRecord::Base
 
     include Art::InstanceMethods
 
-    def self.login
-        puts "Welcome Back! What is your Username?"
-        name = gets.strip
-        user = User.find_by(username: name)
-        if name == "exit" || user ==nil #if you type in a name that login cannot find, there is nothing
-            puts "We were not able to find a user with the Username provided" if user == nil
-            puts "You have chosen to leave the login screen" if name == "exit"
-            puts "You need to signup, login, or browse to access our animals!"
-            user = false     
-        else
-            puts "What is your password?" 
-            password = gets.strip #if no user, then this will trigger CLI to relaunch
-            puts "You have typed the wrong password " if password != user.password 
-            puts "You need to signup, login, or browse to access our animals!" if password != user.password 
-            user = false if password != user.password #if user signs in correctly, then user is used in CLI APP. 
-        end
-        user
-    end
+    # def self.login
+    #     puts "Welcome Back! What is your Username?"
+    #     name = gets.strip
+    #     user = User.find_by(username: name)
+    #     if name == "exit" || user ==nil #if you type in a name that login cannot find, there is nothing
+    #         puts "We were not able to find a user with the Username provided" if user == nil
+    #         puts "You have chosen to leave the login screen" if name == "exit"
+    #         puts "You need to signup, login, or browse to access our animals!"
+    #         user = false     
+    #     else
+    #         puts "What is your password?" 
+    #         password = gets.strip #if no user, then this will trigger CLI to relaunch
+    #         puts "You have typed the wrong password " if password != user.password 
+    #         puts "You need to signup, login, or browse to access our animals!" if password != user.password 
+    #         user = false if password != user.password #if user signs in correctly, then user is used in CLI APP. 
+    #     end
+    #     user
+    # end
 
-    def self.sign_up
-        user = puts "Please enter your username: "
-        name = gets.strip
-        if name=="exit" || User.find_by(username: name)
-            puts "#{name} is already taken." if User.find_by(username: name)
-            puts "You have chosen to leave the sign up screen" if name == "exit"
-            puts "You need to signup, login, or browse to access our animals!"
-            user=false
-        else
-            puts "Your username is #{name}. Please keep track of it."
-            puts "Enter a password: "
-            password = gets.strip
-            user = User.create(username: name, password: password, display_name: nil)
-            puts "Would you like a nickname that we can address by? (Y/N)"
-            input = gets.strip
-            if input.downcase == "y"
-                puts "What would you like that name to be?"
-                name_input = gets.strip
-                puts "Great! Thanks, #{name_input}!"
-                user.display_name = name_input
-            else
-                puts "Okay, no worries!"
-            end
-        end
-        user
-    end
+    # def self.sign_up
+    #     user = puts "Please enter your username: "
+    #     name = gets.strip
+    #     if name=="exit" || User.find_by(username: name)
+    #         puts "#{name} is already taken." if User.find_by(username: name)
+    #         puts "You have chosen to leave the sign up screen" if name == "exit"
+    #         puts "You need to signup, login, or browse to access our animals!"
+    #         user=false
+    #     else
+    #         puts "Your username is #{name}. Please keep track of it."
+    #         puts "Enter a password: "
+    #         password = gets.strip
+    #         user = User.create(username: name, password: password, display_name: nil)
+    #         puts "Would you like a nickname that we can address by? (Y/N)"
+    #         input = gets.strip
+    #         if input.downcase == "y"
+    #             puts "What would you like that name to be?"
+    #             name_input = gets.strip
+    #             puts "Great! Thanks, #{name_input}!"
+    #             user.display_name = name_input
+    #         else
+    #             puts "Okay, no worries!"
+    #         end
+    #     end
+    #     user
+    # end
     
     def my_favorites
         Favorite.all.where(user_id: self.id)
@@ -58,7 +58,7 @@ class User < ActiveRecord::Base
 
     def see_favorites
         if self.my_favorites.empty?
-            no_favorites #This is just words in art"
+            puts "You currently do not have any favorites.\nIf you would like to add a new favorite animal, please type 'add' in the main menu.\n"
         else
             puts "------------"
             puts "MY FAVORITES"
@@ -81,10 +81,10 @@ class User < ActiveRecord::Base
                 current += 5
                 input = "exit" if show_length.length < 5
                 puts "\n Type 'exit' if you would like to exit or any key to see more favorites."
-                input = gets.chomp if show_length.length >= 5
-
+                input = gets.chomp.downcase if show_length.length >= 5
             end
         end
+        input
     end
 
     def list_animals #doesn't add to favorite when typing in animal name after list
@@ -115,15 +115,46 @@ class User < ActiveRecord::Base
 
     def remove_animal
         if self.my_favorites.empty?
-            no_favorites #This is just a method for words
-        else
+            no_favorites #This is just words in art"
+        else 
             puts "\n Please choose one animal, by their common name, from the following list:"
-            self.see_favorites
-            input = gets.chomp.downcase
-            animal = Animal.all.find_by(common_name: input)
-            animal_to_delete = Favorite.all.find_by(user_id: self.id, animal_id: animal.id)
-            animal_to_delete.delete
-        end
+            count = 1
+            hash_anny = {}
+            binding.pry
+            self.my_favorites.each do |favorite|
+                Animal.all.each do |animal|
+                if animal.id == favorite.animal_id
+                    hash_anny[count]= "#{animal.common_name.capitalize} | Scientific name: #{animal.scientific_name.capitalize} | Conservation status: #{animal.category.capitalize}."#\n"
+                        count += 1
+                    end #array_of_favs << "#{animal.common_name.capitalize}"
+                end
+            end
+            hash_anny.each {|k,v| puts "#{k}. #{v}" }
+            # input = nil
+            # animal= nil
+            # current = 0
+            # until input == "exit" || anny.include?(input) do
+            #     puts "We are glad you did not chose any adorable animals to remove from your list" if animal ==nil && input != nil
+            #     show_length = anny[current...current+5].each {|fav| puts fav}
+            #     current += 5
+            #     input = "exit" if show_length.length < 5
+            #     puts "\n Type 'exit' if you would like to exit or any key to see more favorites."
+            #     animal= Animal.all.find_by(common_name: input)
+            #     input = gets.strip.downcase if show_length.length >= 5
+            # end
+            input = gets.strip.downcase
+            binding.pry
+            animal = Animal.all.find_by(common_name: input) #This line cannot find animal for some reason
+            if animal ==nil || input == "exit"
+                puts "you have chosen to 'exit from this screen.\nThank you for leaving these poor animals alone." if input == "exit"
+                puts "you must have made a typo.\nMaybe no animal wants to leave your list" if animal ==nil
+            elsif animal 
+                puts "You have deleted #{input} from your favorites.\n#{input} is very sad to be deleted from your list.\nI hope you are happy with yourself."
+                animal_to_delete = Favorite.all.find_by(user_id: self.id, animal_id: animal.id)
+                animal_to_delete = animal_to_delete.delete
+            end
+        end #User.find_by(username:"james wu")
+        #input = false if input = "exit" #if input is false. The user will leave APP immediately
     end
     
     def search

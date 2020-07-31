@@ -78,9 +78,9 @@ def donation_instructions
     input
 end 
 
-def no_favorites 
-    puts "You currently do not have any favorites.\nIf you would like to add a new favorite animal, please type 'add' in the main menu.\n"
-end
+# def no_favorites 
+#     puts "You currently do not have any favorites.\nIf you would like to add a new favorite animal, please type 'add' in the main menu.\n"
+# end
 
 def names
     names= "Tashawn Williams,Ian Grubb,James wu,Ian Rosen,Jennifer Yoo,Alex Beciana,Junko Tahara,Ryan Werner,Karan S. Chauhan,Se Min Lee,Jake lozano,Brian Lego,Devin Benson,Muhtasim Ferdous,Josh Allen,David Kirsch,Amit Deshpande,Jake Mills,Victor Scholz,Kevin Xie,Ryan Flynn,Vincent Yang,David Kim,Ward Price,Cody DeMartin,Ryan Locascio,Matthew Peters,Gregory A.S. Wright,Cody C,Mimi Ojserkis,Mineliegoma,Joseph Kofler,Samuel Lesser,Sawandi Wilson,Iuriseara,Jzavier Timm,Israel Canessa,Vladilen Napuri,Teddy Bradsher"
